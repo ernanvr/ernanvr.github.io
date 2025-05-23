@@ -1,6 +1,6 @@
 ---
 author: Ernán Velásquez
-pubDatetime: 2025-02-02T03:57:52.737Z
+pubDatetime: 2025-05-22T03:57:52.737Z
 title: How to Win Friends and Influence People (Dale Carnegie)- Key Insights
 slug: how-to-win-friends-and-influence-people-key-insights
 featured: false
@@ -10,58 +10,92 @@ tags:
 description: How to treat others is the fundamental skill everyone needs and this is my take based on what I learned from How to win friends and influence people book.
 ---
 
-## Fundamental Techniques for Dealing with Others  
+### **Fundamental Techniques for Handling People**
 
-### No Criticism, No Condemnation, No Complaints  
+1.  **Don't Criticize, Condemn, or Complain:**
+    * Avoid criticism, condemnation, and complaints. No one believes they are guilty, and criticism only generates resentment.
+    * Be understanding and capable of forgiving, demonstrating greatness in how you treat others.
 
-No one truly believes they are guilty.  
+2.  **Give Honest and Sincere Appreciation:**
+    * Recognize and value others genuinely. Appreciation is vital nourishment for ambition and personal development.
+    * Be hearty in your approval and generous in your praise, differentiating sincere appreciation from selfish flattery.
 
-Criticism wounds the ego and awakens resentments that can last for decades.  
+3.  **Arouse in the Other Person an Eager Want:**
+    * To influence, talk about what the other person wants and show them how to get it.
+    * Arouse a frank desire in others, seeking win-win outcomes and allowing them to feel that the ideas are their own.
 
-Any fool can complain, criticize, and judge.  
+### **6 Ways to Make People Like You**
 
-It takes character and self-control to be understanding and capable of forgiveness.  
+1.  **Become Genuinely Interested in Other People:**
+    * Show a genuine interest in the lives and affairs of others.
+    * Remember that people are interested in those who are sincerely interested in them.
 
-A great person demonstrates their greatness in how they treat those with less power.  
+2.  **Smile:**
+    * A smile is a powerful expression that conveys happiness and warmth.
+    * Smile when speaking, teaching, or selling, as it improves efficiency and the atmosphere.
 
-### Show Honest and Sincere Appreciation  
+3.  **Remember a Person's Name:**
+    * A person's name is the sweetest and most important sound to them in any language.
+    * Remembering and using someone's name is a subtle compliment that generates goodwill.
 
-We all need recognition, to feel important—it’s one of life’s great driving forces.  
+4.  **Be a Good Listener and Encourage Others to Talk About Themselves:**
+    * Give exclusive and absorbed attention to the speaker.
+    * Encourage others to share their experiences and problems; sometimes they just need to be heard, not an opinion.
 
-The best way to bring out the best in people is through appreciation and encouragement.  
+5.  **Talk in Terms of the Other Person's Interests:**
+    * Find out what your interlocutor enjoys and focus the conversation on those topics.
+    * Talking about what they are passionate about is the royal road to their heart.
 
-Nothing kills ambition more than the criticism of a superior.  
+6.  **Make the Other Person Feel Important – and Do It Sincerely:**
+    * We all yearn to feel important and appreciated.
+    * Use small courtesies and sincere praise to make others feel valued.
 
-Appreciation is a fundamental necessity.  
+### **Win People to Your Way of Thinking**
 
-Flattery is insincere, but appreciation is genuine. One comes from the heart, the other from the mouth. One is selfless, the other selfish.  
+1.  **The Only Way to Get the Best of an Argument Is to Avoid It:**
+    * Avoid arguments at all costs. If you win, you make the other person feel inferior and lose their goodwill.
+    * Misunderstandings are resolved with tact, diplomacy, and a desire to understand, not with confrontation.
 
-Ways to show appreciation:  
-- Show genuine interest  
-- Offer praise  
-- Give congratulations  
-- Express gratitude  
+2.  **Show Respect for the Other Person's Opinions. Never Say "You're Wrong":**
+    * Never tell someone directly that they are wrong, as this attacks their pride and judgment.
+    * People have prejudices and do not easily change their minds if they feel attacked.
 
-Hurting people does not change them. In fact, no one will ever thank you for it.  
+3.  **If You Are Wrong, Admit It Quickly and Emphatically:**
+    * Admitting your own mistakes elevates you and disarms the interlocutor, who will likely adopt a forgiving attitude.
+    * It is easier to hear criticism from your own lips than from others.
 
-"I shall pass this way but once; therefore, any good that I can do or any kindness I can show to any human being, let me do it now. Let me not defer or neglect it, for I shall not pass this way again."  
+4.  **Begin in a Friendly Way:**
+    * A "drop of honey" (sincere friendship) attracts more than a "gallon of gall" (scolding or threats).
+    * Convince others that you are a sincere friend; this is the path to their reason.
 
-Every person I meet is superior to me in some way; in that way, I learn from them.  
+5.  **Get the Other Person Saying "Yes, Yes" Immediately:**
+    * Guide the conversation to obtain a series of affirmative responses from the outset.
+    * Once a person says "yes," their pride compels them to be consistent.
 
-Be warm in approval and generous in praise.  
+6.  **Let the Other Person Do a Great Deal of the Talking:**
+    * Let others talk about their achievements and experiences.
+    * If you want friends, allow them to outdo you and share their joys.
 
-### Awaken in Others a Burning Desire  
+7.  **Let the Other Person Feel That the Idea Is His or Hers:**
+    * Make subtle suggestions and let others come to their own conclusions.
+    * People like to feel that their ideas are their own and that they are consulted.
 
-"When I go fishing, I don’t think about what I like—I think about what the fish prefer. Why not apply the same common sense when dealing with people?"
+8.  **Try Honestly to See Things from the Other Person's Point of View:**
+    * Strive to understand why the other person thinks and acts as they do.
+    * Putting yourself in their shoes will save you irritation and improve your ability to deal with people.
 
-The only way to influence others is to talk about what they want and show them how to get it.  
+9.  **Be Sympathetic with the Other Person's Ideas and Desires:**
+    * Express understanding and empathy, saying: "I don't blame you for feeling that way; I would feel the same in your place."
+    * Convert hostility into friendship with compassion and self-control.
 
-Action arises from fundamental desires, so to be persuasive, we must awaken a strong desire in others.  
+10. **Appeal to the Nobler Motives:**
+    * People usually have a "good and worthy" reason for doing things, in addition to the real one.
+    * Appeal to their idealism and their desire to be considered honorable and just.
 
-The world is full of selfish, opportunistic people. That’s why those few who genuinely seek to help others have a huge advantage—there is no competition against them.  
+11. **Dramatize Your Ideas:**
+    * Don't just state the truth; make it vivid, interesting, and dramatic to capture attention.
+    * Present your ideas in a way that is memorable and attractive.
 
-Everyone should win. This should not be confused with manipulation, which implies winning at the expense of others.  
-
-Self-expression is the dominant need in human nature.  
-
-When we have a brilliant idea, instead of making others think it’s ours, why not let them develop it themselves? They will consider it their own, like it, and use it.
+12. **Throw Down a Challenge:**
+    * Stimulate healthy competition and the desire for self-improvement in others.
+    * The game, the opportunity to express oneself, and to demonstrate one's worth are great motivators.
