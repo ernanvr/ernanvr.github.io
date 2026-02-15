@@ -7,7 +7,7 @@ activeNav: "about"
 I am in the early stages of building an AI services startup while working full-time. My long-term vision is to help make El Salvador a technology power by helping Salvadoran companies compete with strong, practical AI applications.
 
 <div>
-  <img src="/assets/me.jpeg" class="sm:w-1/2 mx-auto" alt="Ernan Velasquez portrait" onerror="this.onerror=null;this.src='/assets/dev.svg';">
+  <img src="/me.jpeg" class="sm:w-1/2 mx-auto" alt="Ernan Velasquez portrait" onerror="this.onerror=null;this.src='/assets/dev.svg';">
 </div>
 
 ## My Journey
