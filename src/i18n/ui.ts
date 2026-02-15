@@ -44,7 +44,7 @@ const ui = {
     "nav.closeMenu": "Cerrar menu",
     "nav.posts": "Articulos",
     "nav.tags": "Etiquetas",
-    "nav.about": "Sobre mi",
+    "nav.about": "Sobre mí",
     "nav.now": "Ahora",
     "nav.uses": "Uso",
     "nav.archives": "Archivos",
