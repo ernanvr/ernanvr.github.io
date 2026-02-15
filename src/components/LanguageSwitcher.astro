@@ -1,0 +1,46 @@
+---
+import {
+  SUPPORTED_LOCALES,
+  getLocaleFromPath,
+  localizePath,
+  LOCALE_INFO,
+} from "@i18n/utils";
+
+export interface Props {
+  ariaLabel?: string;
+}
+
+const { ariaLabel = "Language switcher" } = Astro.props;
+const currentLocale = getLocaleFromPath(Astro.url.pathname);
+---
+
+<div class="locale-switcher" aria-label={ariaLabel}>
+  {
+    SUPPORTED_LOCALES.map(locale => (
+      <a
+        href={localizePath(Astro.url.pathname, locale)}
+        class:list={[
+          "locale-link",
+          currentLocale === locale && "locale-link-active",
+        ]}
+        aria-current={currentLocale === locale ? "true" : "false"}
+      >
+        <span>{LOCALE_INFO[locale].code}</span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .locale-switcher {
+    @apply col-span-2 flex items-center justify-center gap-1 sm:col-span-1;
+  }
+
+  .locale-link {
+    @apply inline-flex w-auto items-center rounded-md border border-transparent px-2 py-1 text-xs font-semibold no-underline opacity-85 hover:border-skin-line/80 hover:bg-skin-card/70 hover:text-skin-accent hover:opacity-100;
+  }
+
+  .locale-link-active {
+    @apply border-skin-line bg-skin-card text-skin-accent opacity-100 no-underline;
+  }
+</style>

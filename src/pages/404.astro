@@ -10,13 +10,13 @@ import LinkButton from "@components/LinkButton.astro";
   <Header />
 
   <main id="main-content">
-    <div class="not-found-wrapper">
+    <div class="not-found-wrapper paper-surface">
       <h1>404</h1>
       <span aria-hidden="true">¯\_(ツ)_/¯</span>
       <p>Page Not Found</p>
       <LinkButton
         href="/"
-        className="my-6 text-lg underline decoration-dashed underline-offset-8"
+        className="paper-surface paper-surface-hover my-6 inline-flex items-center px-4 py-2 font-mono text-sm"
       >
         Go back home
       </LinkButton>
@@ -28,13 +28,13 @@ import LinkButton from "@components/LinkButton.astro";
 
 <style>
   #main-content {
-    @apply mx-auto flex max-w-3xl flex-1 items-center justify-center;
+    @apply mx-auto flex max-w-3xl flex-1 items-center justify-center px-4;
   }
   .not-found-wrapper {
-    @apply mb-14 flex flex-col items-center justify-center;
+    @apply mb-14 flex w-full max-w-xl flex-col items-center justify-center px-6 py-12;
   }
   .not-found-wrapper h1 {
-    @apply text-9xl font-bold text-skin-accent;
+    @apply text-8xl font-bold text-skin-accent sm:text-9xl;
   }
   .not-found-wrapper p {
     @apply mt-4 text-2xl sm:text-3xl;

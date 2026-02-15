@@ -1,0 +1,175 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import LinkButton from "@components/LinkButton.astro";
+import Hr from "@components/Hr.astro";
+import Card from "@components/Card";
+import Socials from "@components/Socials.astro";
+import getSortedPosts from "@utils/getSortedPosts";
+import { useTranslations } from "@i18n/ui";
+import { getLocalizedPath } from "@i18n/utils";
+import { SITE, SOCIALS } from "@config";
+
+const locale = "es" as const;
+const t = useTranslations(locale);
+
+const posts = await getCollection("blog", ({ data }) => data.lang === locale);
+
+const sortedPosts = getSortedPosts(posts);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+
+const socialCount = SOCIALS.filter(social => social.active).length;
+---
+
+<Layout title={`Inicio | ${SITE.title}`}>
+  <Header />
+  <main id="main-content">
+    <section id="hero" class="paper-surface">
+      <h1>Hola, soy Ernán.</h1>
+      <a
+        target="_blank"
+        href={getLocalizedPath(locale, "rss")}
+        class="rss-link"
+        aria-label="rss feed"
+        title="RSS Feed"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
+          ><path
+            d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
+          ></path><path
+            d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
+          ></path><circle cx="6" cy="18" r="2"></circle>
+        </svg>
+        <span class="sr-only">RSS Feed</span>
+      </a>
+
+      <p>
+        Soy un emprendedor de El Salvador enfocado en IA, startups e impacto de
+        largo plazo. Estoy en las primeras etapas de construir Santa Clarita
+        Digital Labs mientras trabajo tiempo completo, y este blog es el espacio
+        donde comparto las ideas que guian mi forma de pensar y construir.
+      </p>
+      <p>
+        Aqui vas a encontrar contenido sobre IA aplicada, estrategia de
+        negocios, filosofia, felicidad y el futuro de El Salvador como potencia
+        tecnologica.
+      </p>
+      <p>
+        Mi objetivo es simple: conectar con personas en todo el mundo que
+        quieren crear cosas con impacto real.
+      </p>
+
+      {
+        socialCount > 0 && (
+          <div class="social-wrapper">
+            <div class="social-links">{t("home.socialLinks")}</div>
+            <Socials />
+          </div>
+        )
+      }
+    </section>
+
+    <Hr />
+
+    {
+      featuredPosts.length > 0 && (
+        <>
+          <section id="featured">
+            <h2>{t("home.featured")}</h2>
+            <ul class="space-y-1">
+              {featuredPosts.map(({ data, slug }) => (
+                <Card
+                  href={`${getLocalizedPath(locale, "posts")}${slug}/`}
+                  frontmatter={data}
+                  locale={locale}
+                  secHeading={false}
+                />
+              ))}
+            </ul>
+          </section>
+          {recentPosts.length > 0 && <Hr />}
+        </>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts">
+          <h2>{t("home.recentPosts")}</h2>
+          <ul class="space-y-1">
+            {recentPosts.map(
+              ({ data, slug }, index) =>
+                index < SITE.postPerIndex && (
+                  <Card
+                    href={`${getLocalizedPath(locale, "posts")}${slug}/`}
+                    frontmatter={data}
+                    locale={locale}
+                    secHeading={false}
+                  />
+                )
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="all-posts-btn-wrapper">
+      <LinkButton href={getLocalizedPath(locale, "posts")}>
+        {t("home.allPosts")}
+        <svg xmlns="http://www.w3.org/2000/svg"
+          ><path
+            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+          ></path>
+        </svg>
+      </LinkButton>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  #main-content {
+    @apply mx-auto w-full max-w-3xl px-4 pb-10;
+  }
+
+  #hero {
+    @apply mb-8 mt-8 px-5 pb-8 pt-7 sm:px-7;
+  }
+  #hero h1 {
+    @apply my-4 inline-block text-4xl font-bold tracking-tight sm:my-6 sm:text-5xl;
+  }
+  #hero .rss-link {
+    @apply inline-flex rounded-md border border-skin-line/70 bg-skin-card/60 p-2;
+  }
+  #hero .rss-icon {
+    @apply h-6 w-6 scale-110 fill-skin-accent sm:scale-125;
+  }
+  #hero p {
+    @apply my-3 text-[1.02rem] leading-7;
+  }
+  .social-wrapper {
+    @apply mt-6 flex flex-col rounded-md border border-skin-line/70 bg-skin-card/55 px-3 py-3 sm:flex-row sm:items-center;
+  }
+  .social-links {
+    @apply mb-2 mr-2 whitespace-nowrap font-mono text-sm sm:mb-0;
+  }
+
+  #featured,
+  #recent-posts {
+    @apply pb-6 pt-8;
+  }
+  #featured h2,
+  #recent-posts h2 {
+    @apply mb-5 text-2xl font-semibold tracking-tight;
+  }
+  .all-posts-btn-wrapper {
+    @apply my-10 text-center;
+  }
+  .all-posts-btn-wrapper a {
+    @apply inline-flex items-center gap-1 rounded-lg border border-skin-line/70 bg-paper px-4 py-2 font-mono text-sm shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-skin-line hover:shadow-card-hover;
+  }
+</style>

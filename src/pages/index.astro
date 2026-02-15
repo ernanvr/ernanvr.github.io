@@ -8,9 +8,14 @@ import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
+import { useTranslations } from "@i18n/ui";
+import { getLocalizedPath } from "@i18n/utils";
 import { SITE, SOCIALS } from "@config";
 
-const posts = await getCollection("blog");
+const locale = "en";
+const t = useTranslations(locale);
+
+const posts = await getCollection("blog", ({ data }) => data.lang === locale);
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
@@ -22,11 +27,11 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 <Layout>
   <Header />
   <main id="main-content">
-    <section id="hero">
-      <h1>Hello world</h1>
+    <section id="hero" class="paper-surface">
+      <h1>Hi, I&apos;m Ernán.</h1>
       <a
         target="_blank"
-        href="/rss.xml"
+        href={getLocalizedPath(locale, "rss")}
         class="rss-link"
         aria-label="rss feed"
         title="RSS Feed"
@@ -42,29 +47,24 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       </a>
 
       <p>
-        I’m Ernán, a software developer, entrepreneur and tech enthusiast from
-        El Salvador. By day, I work in supplier management, and by night, I dive
-        into coding, building apps, and exploring ways technology can solve
-        real-world problems. I’m passionate about personal growth, continuous
-        learning, and creating things that make a difference—whether it’s
-        software, automation, or even music. Here, I share my experiences,
-        projects, and thoughts on tech, productivity, and life. Stick around,
-        and let’s build something great together!
+        I&apos;m an entrepreneur from El Salvador focused on AI, startups, and
+        long-term impact. I&apos;m in the early stages of building Santa Clarita
+        Digital Labs while working full-time, and this blog is where I share the
+        ideas that shape how I think and build.
       </p>
-      <!-- <p> -->
-      <!--   Read the blog posts or check -->
-      <!--   <LinkButton -->
-      <!--     className="underline decoration-dashed underline-offset-4 hover:text-skin-accent" -->
-      <!--     href="https://github.com/satnaing/astro-paper#readme" -->
-      <!--   > -->
-      <!--     README -->
-      <!--   </LinkButton> for more info. -->
-      <!-- </p> -->
+      <p>
+        You&apos;ll find writing about applied AI, business strategy,
+        philosophy, happiness, and the future of El Salvador as a technology
+        power.
+      </p>
+      <p>
+        My goal is simple: connect with people around the world who want to
+        create meaningful things.
+      </p>
       {
-        // only display if at least one social link is enabled
         socialCount > 0 && (
           <div class="social-wrapper">
-            <div class="social-links">Social Links:</div>
+            <div class="social-links">{t("home.socialLinks")}</div>
             <Socials />
           </div>
         )
@@ -77,12 +77,13 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       featuredPosts.length > 0 && (
         <>
           <section id="featured">
-            <h2>Featured</h2>
-            <ul>
+            <h2>{t("home.featured")}</h2>
+            <ul class="space-y-1">
               {featuredPosts.map(({ data, slug }) => (
                 <Card
-                  href={`/posts/${slug}/`}
+                  href={`${getLocalizedPath(locale, "posts")}${slug}/`}
                   frontmatter={data}
+                  locale={locale}
                   secHeading={false}
                 />
               ))}
@@ -96,14 +97,15 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     {
       recentPosts.length > 0 && (
         <section id="recent-posts">
-          <h2>Recent Posts</h2>
-          <ul>
+          <h2>{t("home.recentPosts")}</h2>
+          <ul class="space-y-1">
             {recentPosts.map(
               ({ data, slug }, index) =>
                 index < SITE.postPerIndex && (
                   <Card
-                    href={`/posts/${slug}/`}
+                    href={`${getLocalizedPath(locale, "posts")}${slug}/`}
                     frontmatter={data}
+                    locale={locale}
                     secHeading={false}
                   />
                 )
@@ -114,8 +116,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     <div class="all-posts-btn-wrapper">
-      <LinkButton href="/posts/">
-        All Posts
+      <LinkButton href={getLocalizedPath(locale, "posts")}>
+        {t("home.allPosts")}
         <svg xmlns="http://www.w3.org/2000/svg"
           ><path
             d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
@@ -131,38 +133,45 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 <style>
   /* ===== Hero Section ===== */
 
+  #main-content {
+    @apply mx-auto w-full max-w-3xl px-4 pb-10;
+  }
+
   #hero {
-    @apply pb-6 pt-8;
+    @apply mb-8 mt-8 px-5 pb-8 pt-7 sm:px-7;
   }
   #hero h1 {
-    @apply my-4 inline-block text-3xl font-bold sm:my-8 sm:text-5xl;
+    @apply my-4 inline-block text-4xl font-bold tracking-tight sm:my-6 sm:text-5xl;
   }
   #hero .rss-link {
-    @apply mb-6;
+    @apply inline-flex rounded-md border border-skin-line/70 bg-skin-card/60 p-2;
   }
   #hero .rss-icon {
-    @apply mb-2 h-6 w-6 scale-110 fill-skin-accent sm:mb-3 sm:scale-125;
+    @apply h-6 w-6 scale-110 fill-skin-accent sm:scale-125;
   }
   #hero p {
-    @apply my-2;
+    @apply my-3 text-[1.02rem] leading-7;
   }
   .social-wrapper {
-    @apply mt-4 flex flex-col sm:flex-row sm:items-center;
+    @apply mt-6 flex flex-col rounded-md border border-skin-line/70 bg-skin-card/55 px-3 py-3 sm:flex-row sm:items-center;
   }
   .social-links {
-    @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
+    @apply mb-2 mr-2 whitespace-nowrap font-mono text-sm sm:mb-0;
   }
 
   /* ===== Featured & Recent Posts Sections ===== */
   #featured,
   #recent-posts {
-    @apply pb-6 pt-12;
+    @apply pb-6 pt-8;
   }
   #featured h2,
   #recent-posts h2 {
-    @apply text-2xl font-semibold tracking-wide;
+    @apply mb-5 text-2xl font-semibold tracking-tight;
   }
   .all-posts-btn-wrapper {
-    @apply my-8 text-center;
+    @apply my-10 text-center;
+  }
+  .all-posts-btn-wrapper a {
+    @apply inline-flex items-center gap-1 rounded-lg border border-skin-line/70 bg-paper px-4 py-2 font-mono text-sm shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-skin-line hover:shadow-card-hover;
   }
 </style>

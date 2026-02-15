@@ -1,26 +1,42 @@
 ---
 layout: ../layouts/AboutLayout.astro
 title: "About"
+activeNav: "about"
 ---
 
-Hello! I'm Ernán Velásquez, a dedicated professional from El Salvador with a diverse background in supplier management and a passion for technology and continuous learning.
+I am in the early stages of building an AI services startup while working full-time. My long-term vision is to help make El Salvador a technology power by helping Salvadoran companies compete with strong, practical AI applications.
 
 <div>
-  <img src="/assets/dev.svg" class="sm:w-1/2 mx-auto" alt="coding dev illustration">
+  <img src="/assets/me.jpeg" class="sm:w-1/2 mx-auto" alt="Ernan Velasquez portrait" onerror="this.onerror=null;this.src='/assets/dev.svg';">
 </div>
 
+## My Journey
 
-**Professional Experience**
+I started learning programming in 2021. I began with C and JavaScript, then expanded to TypeScript, Dart, and Python. Over time, that curiosity evolved into a serious focus on AI, startups, and business strategy.
 
-I have extensive experience in supplier management, where I've honed my skills in procurement, negotiation, and logistics. My role involves ensuring efficient supply chain operations and fostering strong relationships with suppliers to meet organizational goals.
+Today I am exploring ideas through Santa Clarita Digital Labs, building prototypes, sharpening my technical and strategic thinking, and sharing what I learn in public.
 
-**Journey into Technology**
+## What I Write About
 
-In 2021, I embarked on a journey into the world of technology. Starting with the fundamentals and history of computer science, I delved into programming by learning C and JavaScript as my initial languages. Building upon this foundation, I expanded my expertise to include TypeScript and Dart, enabling me to undertake various web development projects. Additionally, I have a working knowledge of Python, which has further broadened my technical skill set.
+- AI and startups, including technical insights with a business lens.
+- El Salvador's development and technology potential.
+- Philosophy, happiness, and meaningful work.
+- Personal growth and world-impact initiatives.
 
-**Personal Interests**
+## Why This Blog Exists
 
-Beyond my professional endeavors, I am deeply committed to personal growth and continuous learning. I enjoy exploring new technologies and finding innovative solutions to real-world challenges. Music is another passion of mine, and I believe in the power of creativity in all its forms.
+I write to connect with like-minded people around the world.
 
-Through this blog, I aim to share my experiences, projects, and insights on technology, productivity, and life. I invite you to join me on this journey as we explore and learn together.
+I care deeply about transparency. You will find honest reflections about what I am learning, what is working, and what still needs to improve.
 
+If you are building something ambitious, curious about AI, or interested in the future of El Salvador, I would love to connect.
+
+## More About Me
+
+- [What I am doing now](/now/)
+
+## Connect
+
+- [LinkedIn](https://www.linkedin.com/in/ernanvr/)
+- [GitHub](https://github.com/ernanvr)
+- <a href="https://forms.gle/KfmbWLdteC3uAnPG8" target="_blank" rel="noopener noreferrer">Contact form</a>

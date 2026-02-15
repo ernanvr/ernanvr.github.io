@@ -1,12 +1,12 @@
 import type { Site, SocialObjects } from "./types";
 
 export const SITE: Site = {
-  website: "https://github.com/ernanvr/ernanvr.github.io", // replace this with your deployed domain
+  website: "https://ernanvelasquez.com",
   author: "Ernán Velásquez",
   profile: "https://www.linkedin.com/in/ernanvr/",
-  desc: "Welcome to my personal blog",
+  desc: "Building AI services in El Salvador. Writing about startups, technology, philosophy, and meaningful work.",
   title: "Ernán Velásquez",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "ernan-og-image.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,
   postPerPage: 3,
@@ -20,8 +20,8 @@ export const SITE: Site = {
 };
 
 export const LOCALE = {
-  lang: "en", // html lang code. Set this empty and default will be "en"
-  langTag: ["en-EN"], // BCP 47 Language Tags. Set this empty [] to use the environment default
+  lang: "en",
+  langTag: ["en-US", "es-419"],
 } as const;
 
 export const LOGO_IMAGE = {
@@ -58,9 +58,10 @@ export const SOCIALS: SocialObjects = [
   },
   {
     name: "Mail",
-    href: "mailto:sendemailtoernan@gmail.com",
-    linkTitle: `Send an email to ${SITE.title}`,
+    href: "https://forms.gle/KfmbWLdteC3uAnPG8",
+    linkTitle: `Open contact form for ${SITE.title}`,
     active: true,
+    openInNewTab: true,
   },
   {
     name: "X",

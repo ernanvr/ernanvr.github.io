@@ -1,4 +1,6 @@
-import { LOCALE, SITE } from "@config";
+import { SITE } from "@config";
+import { useTranslations } from "@i18n/ui";
+import { DEFAULT_LOCALE, getLangTag, type Locale } from "@i18n/utils";
 import type { CollectionEntry } from "astro:content";
 
 interface DatetimesProps {
@@ -14,6 +16,7 @@ interface EditPostProps {
 interface Props extends DatetimesProps, EditPostProps {
   size?: "sm" | "lg";
   className?: string;
+  locale?: Locale;
 }
 
 export default function Datetime({
@@ -23,32 +26,38 @@ export default function Datetime({
   className = "",
   editPost,
   postId,
+  locale = DEFAULT_LOCALE,
 }: Props) {
+  const t = useTranslations(locale);
+
   return (
     <div
-      className={`flex items-center space-x-2 opacity-80 ${className}`.trim()}
+      className={`flex items-center space-x-2 text-skin-base/75 ${className}`.trim()}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={`${
           size === "sm" ? "scale-90" : "scale-100"
-        } inline-block h-6 w-6 min-w-[1.375rem] fill-skin-base`}
+        } inline-block h-6 w-6 min-w-[1.375rem] fill-skin-accent/85`}
         aria-hidden="true"
       >
         <path d="M7 11h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2z"></path>
         <path d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM19 8l.001 12H5V8h14z"></path>
       </svg>
-      {modDatetime && modDatetime > pubDatetime ? (
-        <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
-          Updated:
+      {modDatetime && new Date(modDatetime) > new Date(pubDatetime) ? (
+        <span
+          className={`${size === "sm" ? "text-sm" : "text-base"} font-mono`}
+        >
+          {t("datetime.updated")}
         </span>
       ) : (
-        <span className="sr-only">Published:</span>
+        <span className="sr-only">{t("datetime.published")}</span>
       )}
-      <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
+      <span className={`${size === "sm" ? "text-sm" : "text-base"} font-mono`}>
         <FormattedDatetime
           pubDatetime={pubDatetime}
           modDatetime={modDatetime}
+          locale={locale}
         />
         {size === "lg" && <EditPost editPost={editPost} postId={postId} />}
       </span>
@@ -56,27 +65,35 @@ export default function Datetime({
   );
 }
 
-const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
+const FormattedDatetime = ({
+  pubDatetime,
+  modDatetime,
+  locale,
+}: DatetimesProps & { locale: Locale }) => {
   const myDatetime = new Date(
-    modDatetime && modDatetime > pubDatetime ? modDatetime : pubDatetime
+    modDatetime && new Date(modDatetime) > new Date(pubDatetime)
+      ? modDatetime
+      : pubDatetime
   );
 
-  const date = myDatetime.toLocaleDateString(LOCALE.langTag, {
+  const date = myDatetime.toLocaleDateString(getLangTag(locale), {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
 
-  const time = myDatetime.toLocaleTimeString(LOCALE.langTag, {
+  const time = myDatetime.toLocaleTimeString(getLangTag(locale), {
     hour: "2-digit",
     minute: "2-digit",
   });
+
+  const t = useTranslations(locale);
 
   return (
     <>
       <time dateTime={myDatetime.toISOString()}>{date}</time>
       <span aria-hidden="true"> | </span>
-      <span className="sr-only">&nbsp;at&nbsp;</span>
+      <span className="sr-only">&nbsp;{t("datetime.at")}&nbsp;</span>
       <span className="text-nowrap">{time}</span>
     </>
   );
@@ -97,7 +114,7 @@ const EditPost = ({ editPost, postId }: EditPostProps) => {
       <>
         <span aria-hidden="true"> | </span>
         <a
-          className="space-x-1.5 hover:opacity-75"
+          className="space-x-1.5 hover:text-skin-accent"
           href={editPostUrl}
           rel="noopener noreferrer"
           target="_blank"
@@ -112,7 +129,7 @@ const EditPost = ({ editPost, postId }: EditPostProps) => {
             <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
             <path d="M16 5l3 3" />
           </svg>
-          <span className="text-base italic">{editPostText}</span>
+          <span className="font-mono text-sm">{editPostText}</span>
         </a>
       </>
     )

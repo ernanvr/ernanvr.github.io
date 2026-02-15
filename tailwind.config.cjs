@@ -61,6 +61,16 @@ module.exports = {
       },
       fontFamily: {
         mono: ["IBM Plex Mono", "monospace"],
+        serif: ["Merriweather", "Georgia", "serif"],
+      },
+      boxShadow: {
+        card: "0 1px 3px rgb(38 32 28 / 0.08), 0 1px 2px rgb(38 32 28 / 0.04)",
+        "card-hover":
+          "0 4px 6px rgb(38 32 28 / 0.06), 0 2px 4px rgb(38 32 28 / 0.04)",
+      },
+      backgroundImage: {
+        paper:
+          "linear-gradient(140deg, rgb(var(--color-gradient-start)), rgb(var(--color-gradient-end)))",
       },
 
       typography: {

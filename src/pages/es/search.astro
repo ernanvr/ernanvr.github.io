@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import SearchBar from "@components/Search";
+import { getLocalizedPath } from "@i18n/utils";
+import getSortedPosts from "@utils/getSortedPosts";
+
+const posts = await getCollection(
+  "blog",
+  ({ data }) => !data.draft && data.lang === "es"
+);
+const sortedPosts = getSortedPosts(posts);
+
+const searchList = sortedPosts.map(({ data, slug }) => ({
+  title: data.title,
+  description: data.description,
+  data,
+  slug,
+}));
+---
+
+<Layout title={`Buscar | ${SITE.title}`}>
+  <Header activeNav="search" />
+  <Main pageTitle="Buscar" pageDesc="Busca cualquier articulo ...">
+    <SearchBar
+      client:load
+      searchList={searchList}
+      locale="es"
+      postPathPrefix={getLocalizedPath("es", "posts")}
+    />
+  </Main>
+  <Footer />
+</Layout>

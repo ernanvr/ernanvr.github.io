@@ -5,6 +5,8 @@ import Footer from "@components/Footer.astro";
 import Tag from "@components/Tag.astro";
 import Datetime from "@components/Datetime";
 import type { CollectionEntry } from "astro:content";
+import { useTranslations } from "@i18n/ui";
+import { getLocalizedPath, type Locale } from "@i18n/utils";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import { SITE } from "@config";
@@ -12,9 +14,11 @@ import { SITE } from "@config";
 export interface Props {
   post: CollectionEntry<"blog">;
   posts: CollectionEntry<"blog">[];
+  locale?: Locale;
 }
 
-const { post, posts } = Astro.props;
+const { post, posts, locale = "en" } = Astro.props;
+const t = useTranslations(locale);
 
 const {
   title,
@@ -59,25 +63,30 @@ const currentPostIndex = allPosts.findIndex(a => a.slug === post.slug);
 const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =
   currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
+
+const homePath = getLocalizedPath(locale, "home");
+const postPath = getLocalizedPath(locale, "posts");
 ---
 
 <Layout {...layoutProps}>
   <Header />
 
-  <div class="mx-auto flex w-full max-w-3xl justify-start px-2">
+  <div class="mx-auto flex w-full max-w-3xl justify-start px-4">
     <button
-      class="focus-outline mb-2 mt-8 flex hover:opacity-75"
-      onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
+      class="focus-outline paper-surface mb-2 mt-8 flex items-center gap-1 px-3 py-1.5 font-mono text-sm hover:text-skin-accent"
+      onclick={`(() => (history.length === 1) ? window.location = '${homePath}' : history.back())()`}
     >
       <svg xmlns="http://www.w3.org/2000/svg"
         ><path
           d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
         ></path>
-      </svg><span>Go back</span>
+      </svg><span>{t("post.goBack")}</span>
     </button>
   </div>
   <main id="main-content">
-    <h1 transition:name={slugifyStr(title)} class="post-title inline-block">{title}</h1>
+    <h1 transition:name={slugifyStr(title)} class="post-title inline-block">
+      {title}
+    </h1>
     <Datetime
       pubDatetime={pubDatetime}
       modDatetime={modDatetime}
@@ -85,13 +94,17 @@ const nextPost =
       className="my-2"
       editPost={editPost}
       postId={post.id}
+      locale={locale}
     />
-    <article id="article" class="prose mx-auto mt-8 max-w-3xl">
+    <article
+      id="article"
+      class="prose paper-surface mx-auto mt-8 max-w-3xl px-5 py-6 sm:px-7"
+    >
       <Content />
     </article>
 
-    <ul class="my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
+    <ul class="my-8 flex flex-wrap gap-y-2">
+      {tags.map(tag => <Tag tag={slugifyStr(tag)} locale={locale} />)}
     </ul>
 
     <div
@@ -99,28 +112,28 @@ const nextPost =
     >
       <button
         id="back-to-top"
-        class="focus-outline whitespace-nowrap py-1 hover:opacity-75"
+        class="focus-outline paper-surface whitespace-nowrap px-3 py-1.5 font-mono text-sm hover:text-skin-accent"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="rotate-90">
           <path
             d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
           ></path>
         </svg>
-        <span>Back to Top</span>
+        <span>{t("post.backToTop")}</span>
       </button>
 
       <ShareLinks />
     </div>
 
-    <hr class="my-6 border-dashed" />
+    <hr class="my-6 border-dashed border-skin-line/80" />
 
     <!-- Previous/Next Post Buttons -->
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
       {
         prevPost && (
           <a
-            href={`/posts/${prevPost.slug}`}
-            class="flex w-full gap-1 hover:opacity-75"
+            href={`${postPath}${prevPost.slug}`}
+            class="paper-surface paper-surface-hover flex w-full gap-2 px-3 py-3"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +153,7 @@ const nextPost =
               </>
             </svg>
             <div>
-              <span>Previous Post</span>
+              <span>{t("post.previousPost")}</span>
               <div class="text-sm text-skin-accent/85">{prevPost.title}</div>
             </div>
           </a>
@@ -149,11 +162,11 @@ const nextPost =
       {
         nextPost && (
           <a
-            href={`/posts/${nextPost.slug}`}
-            class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
+            href={`${postPath}${nextPost.slug}`}
+            class="paper-surface paper-surface-hover flex w-full justify-end gap-2 px-3 py-3 text-right sm:col-start-2"
           >
             <div>
-              <span>Next Post</span>
+              <span>{t("post.nextPost")}</span>
               <div class="text-sm text-skin-accent/85">{nextPost.title}</div>
             </div>
             <svg
@@ -183,10 +196,10 @@ const nextPost =
 
 <style>
   main {
-    @apply mx-auto w-full max-w-3xl px-4 pb-12;
+    @apply mx-auto w-full max-w-3xl px-4 pb-16;
   }
   .post-title {
-    @apply text-2xl font-semibold text-skin-accent;
+    @apply text-3xl font-semibold text-skin-accent sm:text-4xl;
   }
 </style>
 
