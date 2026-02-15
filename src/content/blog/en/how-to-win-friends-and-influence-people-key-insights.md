@@ -90,8 +90,8 @@ My personal takeaway from this section: when I started entering conversations wi
 
 4. **Begin in a Friendly Way:**
 
-   - A "drop of honey" (sincere friendship) attracts more than a "gallon of gall" (scolding or threats).
-   - Convince others that you are a sincere friend; this is the path to their reason.
+   - A friendly attitude convinces more than imposition.
+   - Show yourself as a sincere friend; this opens space for reason.
 
 5. **Get the Other Person Saying "Yes, Yes" Immediately:**
 
@@ -101,7 +101,7 @@ My personal takeaway from this section: when I started entering conversations wi
 6. **Let the Other Person Do a Great Deal of the Talking:**
 
    - Let others talk about their achievements and experiences.
-   - If you want friends, allow them to outdo you and share their joys.
+   - If you want to build relationships, give space for them to share their story.
 
 7. **Let the Other Person Feel That the Idea Is His or Hers:**
 
@@ -115,8 +115,8 @@ My personal takeaway from this section: when I started entering conversations wi
 
 9. **Be Sympathetic with the Other Person's Ideas and Desires:**
 
-   - Express understanding and empathy, saying: "I don't blame you for feeling that way; I would feel the same in your place."
-   - Convert hostility into friendship with compassion and self-control.
+   - Express understanding and empathy.
+   - Compassion and self-control can transform hostility into cooperation.
 
 10. **Appeal to the Nobler Motives:**
 
