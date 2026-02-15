@@ -1,33 +1,59 @@
 ---
-// Remove current url path and remove trailing slash if exists
-const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
+import { useTranslations } from "@i18n/ui";
+import {
+  getLocaleFromPath,
+  getLocalizedPath,
+  localizePath,
+  stripLocaleFromPath,
+} from "@i18n/utils";
 
-// Get url array from path
-// eg: /tags/tailwindcss => ['tags', 'tailwindcss']
+const locale = getLocaleFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+
+const currentUrlPath = stripLocaleFromPath(Astro.url.pathname).replace(
+  /\/+$/,
+  ""
+);
 const breadcrumbList = currentUrlPath.split("/").slice(1);
 
-// if breadcrumb is Home > Posts > 1 <etc>
-// replace Posts with Posts (page number)
-breadcrumbList[0] === "posts" &&
-  breadcrumbList.splice(0, 2, `Posts (page ${breadcrumbList[1] || 1})`);
+const segmentLabels: Record<string, string> = {
+  posts: t("nav.posts"),
+  tags: t("nav.tags"),
+  archives: t("nav.archives"),
+  search: t("nav.search"),
+  about: t("nav.about"),
+  "sobre-mi": t("nav.about"),
+  now: t("nav.now"),
+  ahora: t("nav.now"),
+  uses: t("nav.uses"),
+  uso: t("nav.uses"),
+};
 
-// if breadcrumb is Home > Tags > [tag] > [page] <etc>
-// replace [tag] > [page] with [tag] (page number)
-breadcrumbList[0] === "tags" &&
-  !isNaN(Number(breadcrumbList[2])) &&
+if (breadcrumbList[0] === "posts") {
+  breadcrumbList.splice(
+    0,
+    2,
+    `${t("nav.posts")} (${t("breadcrumbs.page")} ${breadcrumbList[1] || 1})`
+  );
+}
+
+if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
   breadcrumbList.splice(
     1,
     3,
     `${breadcrumbList[1]} ${
-      Number(breadcrumbList[2]) === 1 ? "" : "(page " + breadcrumbList[2] + ")"
+      Number(breadcrumbList[2]) === 1
+        ? ""
+        : `(${t("breadcrumbs.page")} ${breadcrumbList[2]})`
     }`
   );
+}
 ---
 
 <nav class="breadcrumb" aria-label="breadcrumb">
   <ul>
     <li>
-      <a href="/">Home</a>
+      <a href={getLocalizedPath(locale, "home")}>{t("breadcrumbs.home")}</a>
       <span aria-hidden="true">&raquo;</span>
     </li>
     {
@@ -38,13 +64,23 @@ breadcrumbList[0] === "tags" &&
               class={`${index > 0 ? "lowercase" : "capitalize"}`}
               aria-current="page"
             >
-              {/* make the last part lowercase in Home > Tags > some-tag */}
-              {decodeURIComponent(breadcrumb)}
+              {decodeURIComponent(segmentLabels[breadcrumb] ?? breadcrumb)}
             </span>
           </li>
         ) : (
           <li>
-            <a href={`/${breadcrumb}/`}>{breadcrumb}</a>
+            <a
+              href={localizePath(
+                `/${currentUrlPath
+                  .split("/")
+                  .filter(Boolean)
+                  .slice(0, index + 1)
+                  .join("/")}/`,
+                locale
+              )}
+            >
+              {decodeURIComponent(segmentLabels[breadcrumb] ?? breadcrumb)}
+            </a>
             <span aria-hidden="true">&raquo;</span>
           </li>
         )
@@ -55,18 +91,21 @@ breadcrumbList[0] === "tags" &&
 
 <style>
   .breadcrumb {
-    @apply mx-auto mb-1 mt-8 w-full max-w-3xl px-4;
+    @apply mx-auto mb-2 mt-8 w-full max-w-3xl px-4;
+  }
+  .breadcrumb ul {
+    @apply inline-flex flex-wrap items-center gap-1 rounded-md border border-skin-line/70 bg-skin-card/65 px-3 py-2 font-mono text-xs;
   }
   .breadcrumb ul li {
     @apply inline;
   }
   .breadcrumb ul li a {
-    @apply capitalize opacity-70;
+    @apply capitalize text-skin-base/75;
   }
   .breadcrumb ul li span {
-    @apply opacity-70;
+    @apply text-skin-base/75;
   }
   .breadcrumb ul li:not(:last-child) a {
-    @apply hover:opacity-100;
+    @apply hover:text-skin-accent;
   }
 </style>

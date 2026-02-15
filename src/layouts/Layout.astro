@@ -1,7 +1,13 @@
 ---
-import { LOCALE, SITE } from "@config";
+import { SITE } from "@config";
 import "@styles/base.css";
-import { ViewTransitions } from "astro:transitions";
+import {
+  SUPPORTED_LOCALES,
+  getHreflang,
+  getLangTag,
+  getLocaleFromPath,
+  localizePath,
+} from "@i18n/utils";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
@@ -34,6 +40,12 @@ const socialImageURL = new URL(
   Astro.url.origin
 ).href;
 
+const currentLocale = getLocaleFromPath(Astro.url.pathname);
+const alternateLinks = SUPPORTED_LOCALES.map(locale => ({
+  hrefLang: getHreflang(locale),
+  href: new URL(localizePath(Astro.url.pathname, locale), Astro.site).href,
+}));
+
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -53,13 +65,32 @@ const structuredData = {
 
 <!doctype html>
 <html
-  lang=`${LOCALE.lang ?? "en"}`
+  lang={getLangTag(currentLocale)}
   class={`${scrollSmooth && "scroll-smooth"}`}
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <script is:inline>
+      (() => {
+        const storedTheme = localStorage.getItem("theme");
+        const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
+          .matches
+          ? "dark"
+          : "light";
+        document.documentElement.setAttribute(
+          "data-theme",
+          storedTheme ?? preferredTheme
+        );
+      })();
+    </script>
+    <script is:inline src="/detect-language.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
@@ -69,6 +100,17 @@ const structuredData = {
     <meta name="description" content={description} />
     <meta name="author" content={author} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {
+      alternateLinks.map(link => (
+        <link rel="alternate" hreflang={link.hrefLang} href={link.href} />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(localizePath(Astro.url.pathname, "en"), Astro.site).href}
+    />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
@@ -111,14 +153,14 @@ const structuredData = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap"
       rel="preload"
       as="style"
       onload="this.onload=null; this.rel='stylesheet';"
       crossorigin
     />
 
-    <meta name="theme-color" content="" />
+    <meta name="theme-color" content="#2a211d" />
 
     {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
@@ -131,10 +173,7 @@ const structuredData = {
         />
       )
     }
-
-    <ViewTransitions />
-
-    <script is:inline src="/toggle-theme.js" async></script>
+    <script is:inline src="/toggle-theme.js" defer></script>
   </head>
   <body>
     <slot />

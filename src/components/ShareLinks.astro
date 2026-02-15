@@ -1,8 +1,12 @@
 ---
+import { useTranslations } from "@i18n/ui";
+import { getLocaleFromPath } from "@i18n/utils";
 import LinkButton from "./LinkButton.astro";
 import socialIcons from "@assets/socialIcons";
 
 const URL = Astro.url;
+const locale = getLocaleFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
 
 const shareLinks = [
   {
@@ -39,7 +43,7 @@ const shareLinks = [
 ---
 
 <div class={`social-icons`}>
-  <span class="italic">Share this post on:</span>
+  <span class="italic">{t("post.share")}</span>
   <div class="text-center">
     {
       shareLinks.map(social => (
@@ -58,9 +62,9 @@ const shareLinks = [
 
 <style>
   .social-icons {
-    @apply flex flex-col flex-wrap items-center justify-center gap-1 sm:items-start;
+    @apply flex flex-col flex-wrap items-center justify-center gap-2 rounded-lg border border-skin-line/70 bg-skin-card/65 px-3 py-2 sm:items-start;
   }
   .link-button {
-    @apply scale-90 p-2 hover:rotate-6 sm:p-1;
+    @apply scale-90 rounded-md border border-transparent p-1.5 hover:border-skin-line/75 hover:bg-skin-fill/70;
   }
 </style>

@@ -1,20 +1,25 @@
 ---
 import { LOGO_IMAGE, SITE } from "@config";
+import LanguageSwitcher from "@components/LanguageSwitcher.astro";
+import { useTranslations } from "@i18n/ui";
+import { getLocaleFromPath, getLocalizedPath } from "@i18n/utils";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
 
 export interface Props {
-  activeNav?: "posts" | "archives" | "tags" | "about" | "search";
+  activeNav?: "posts" | "archives" | "tags" | "about" | "search" | "now";
 }
 
 const { activeNav } = Astro.props;
+const locale = getLocaleFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
 ---
 
 <header>
-  <a id="skip-to-content" href="#main-content">Skip to content</a>
+  <a id="skip-to-content" href="#main-content">{t("nav.skipToContent")}</a>
   <div class="nav-container">
-    <div class="top-nav-wrap">
-      <a href="/" class="logo whitespace-nowrap">
+    <div class="top-nav-wrap paper-surface">
+      <a href={getLocalizedPath(locale, "home")} class="logo whitespace-nowrap">
         {
           LOGO_IMAGE.enable ? (
             <img
@@ -31,9 +36,11 @@ const { activeNav } = Astro.props;
       <nav id="nav-menu">
         <button
           class="hamburger-menu focus-outline"
-          aria-label="Open Menu"
+          aria-label={t("nav.openMenu")}
           aria-expanded="false"
           aria-controls="menu-items"
+          data-open-label={t("nav.openMenu")}
+          data-close-label={t("nav.closeMenu")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,28 +63,45 @@ const { activeNav } = Astro.props;
         </button>
         <ul id="menu-items" class="display-none sm:flex">
           <li>
-            <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
-              Posts
+            <a
+              href={getLocalizedPath(locale, "posts")}
+              class={activeNav === "posts" ? "active" : ""}
+            >
+              {t("nav.posts")}
             </a>
           </li>
           <li>
-            <a href="/tags/" class={activeNav === "tags" ? "active" : ""}>
-              Tags
+            <a
+              href={getLocalizedPath(locale, "tags")}
+              class={activeNav === "tags" ? "active" : ""}
+            >
+              {t("nav.tags")}
             </a>
           </li>
           <li>
-            <a href="/about/" class={activeNav === "about" ? "active" : ""}>
-              About
+            <a
+              href={getLocalizedPath(locale, "about")}
+              class={activeNav === "about" ? "active" : ""}
+            >
+              {t("nav.about")}
+            </a>
+          </li>
+          <li>
+            <a
+              href={getLocalizedPath(locale, "now")}
+              class={activeNav === "now" ? "active" : ""}
+            >
+              {t("nav.now")}
             </a>
           </li>
           {
             SITE.showArchives && (
-              <li>
+              <li class="compact-item">
                 <LinkButton
-                  href="/archives/"
+                  href={getLocalizedPath(locale, "archives")}
                   className={`focus-outline flex justify-center p-3 sm:p-1`}
-                  ariaLabel="archives"
-                  title="Archives"
+                  ariaLabel={t("nav.archives")}
+                  title={t("nav.archives")}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -99,20 +123,20 @@ const { activeNav } = Astro.props;
                       activeNav === "archives" && "active",
                     ]}
                   >
-                    Archives
+                    {t("nav.archives")}
                   </span>
                 </LinkButton>
               </li>
             )
           }
-          <li>
+          <li class="compact-item">
             <LinkButton
-              href="/search/"
+              href={getLocalizedPath(locale, "search")}
               className={`focus-outline p-3 sm:p-1 ${
                 activeNav === "search" ? "active" : ""
               } flex`}
-              ariaLabel="search"
-              title="Search"
+              ariaLabel={t("nav.search")}
+              title={t("nav.search")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -121,16 +145,19 @@ const { activeNav } = Astro.props;
                   d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
                 ></path>
               </svg>
-              <span class="sr-only">Search</span>
+              <span class="sr-only">{t("nav.search")}</span>
             </LinkButton>
+          </li>
+          <li class="compact-item language-item">
+            <LanguageSwitcher ariaLabel={t("nav.language")} />
           </li>
           {
             SITE.lightAndDarkMode && (
-              <li>
+              <li class="compact-item">
                 <button
                   id="theme-btn"
                   class="focus-outline"
-                  title="Toggles light & dark"
+                  title={t("nav.themeToggle")}
                   aria-label="auto"
                   aria-live="polite"
                 >
@@ -153,52 +180,54 @@ const { activeNav } = Astro.props;
 
 <style>
   #skip-to-content {
-    @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
+    @apply absolute -top-full left-8 z-50 rounded-md bg-skin-accent px-3 py-2 font-mono text-sm text-skin-inverted transition-all focus:top-4;
   }
   .nav-container {
-    @apply mx-auto flex max-w-3xl flex-col items-center justify-between sm:flex-row;
+    @apply mx-auto flex max-w-4xl flex-col items-center justify-between px-4 pt-6 sm:flex-row sm:pt-8;
   }
   .top-nav-wrap {
-    @apply relative flex w-full items-start justify-between p-4 sm:items-center sm:py-8;
+    @apply relative flex w-full items-start justify-between px-4 py-3 sm:items-center sm:px-5;
   }
   .logo {
-    @apply absolute py-1 text-xl font-semibold sm:static sm:text-2xl;
+    @apply py-1 text-xl font-semibold tracking-tight sm:text-2xl;
   }
   .hamburger-menu {
-    @apply self-end p-2 sm:hidden;
+    @apply self-end rounded-md p-2 hover:bg-skin-card/70 sm:hidden;
   }
   .hamburger-menu svg {
     @apply h-6 w-6 scale-125 fill-skin-base;
   }
 
   nav {
-    @apply flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0;
+    @apply flex w-full flex-col items-center sm:ml-4 sm:w-auto sm:flex-row sm:justify-end sm:py-0;
   }
   nav ul {
-    @apply mt-4 grid w-44 grid-cols-2 grid-rows-4 gap-x-2 gap-y-2 sm:ml-0 sm:mt-0 sm:w-auto sm:gap-x-5 sm:gap-y-0;
+    @apply mt-4 grid w-full max-w-xs grid-cols-2 gap-1 rounded-md border border-skin-line/70 bg-skin-card/70 p-2 shadow-card sm:ml-0 sm:mt-0 sm:flex sm:w-auto sm:flex-nowrap sm:items-center sm:justify-end sm:gap-x-1 sm:gap-y-0 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none;
   }
   nav ul li {
-    @apply col-span-2 flex items-center justify-center;
+    @apply col-span-2 flex items-center justify-center sm:col-span-1;
   }
-  nav ul li a {
-    @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
-  }
-  nav ul li:nth-last-child(2) a {
-    @apply w-auto;
-  }
-  nav ul li:nth-last-child(1),
-  nav ul li:nth-last-child(2) {
+  nav ul li.compact-item {
     @apply col-span-1;
   }
+  nav ul li.language-item {
+    @apply col-span-2 sm:col-span-1;
+  }
+  nav ul li > a {
+    @apply w-full whitespace-nowrap rounded-md border border-transparent px-4 py-2 text-center text-sm font-medium hover:border-skin-line/80 hover:bg-skin-card/65 hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
+  }
+  nav ul li.compact-item > a {
+    @apply w-auto;
+  }
   nav .active {
-    @apply underline decoration-wavy decoration-2 underline-offset-4;
+    @apply border-skin-line bg-skin-card text-skin-accent no-underline;
   }
   nav a.active svg {
     @apply fill-skin-accent;
   }
 
   nav button {
-    @apply p-1;
+    @apply rounded-md p-1 hover:bg-skin-card/70;
   }
   nav button svg {
     @apply h-6 w-6 fill-skin-base hover:fill-skin-accent;
@@ -233,12 +262,12 @@ const { activeNav } = Astro.props;
 
     menuBtn?.addEventListener("click", () => {
       const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
+      const openLabel = menuBtn.getAttribute("data-open-label") || "Open Menu";
+      const closeLabel =
+        menuBtn.getAttribute("data-close-label") || "Close Menu";
       menuIcon?.classList.toggle("is-active");
       menuBtn.setAttribute("aria-expanded", menuExpanded ? "false" : "true");
-      menuBtn.setAttribute(
-        "aria-label",
-        menuExpanded ? "Open Menu" : "Close Menu"
-      );
+      menuBtn.setAttribute("aria-label", menuExpanded ? openLabel : closeLabel);
       menuItems?.classList.toggle("display-none");
     });
   }

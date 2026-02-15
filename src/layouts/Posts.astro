@@ -5,24 +5,41 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Pagination from "@components/Pagination.astro";
 import Card from "@components/Card";
+import { useTranslations } from "@i18n/ui";
+import { getLocalizedPath, type Locale } from "@i18n/utils";
 import { SITE } from "@config";
 import type { Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 
 export interface Props {
   page: Page<CollectionEntry<"blog">>;
+  locale?: Locale;
 }
 
-const { page } = Astro.props;
+const { page, locale = "en" } = Astro.props;
+const t = useTranslations(locale);
+const postPath = getLocalizedPath(locale, "posts");
+const pageDescriptions = {
+  en: "All the articles I've posted.",
+  es: "Todos los articulos que he publicado.",
+};
+const pageTitles = {
+  en: "Posts",
+  es: "Articulos",
+};
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
+<Layout title={`${pageTitles[locale]} | ${SITE.title}`}>
   <Header activeNav="posts" />
-  <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
-    <ul>
+  <Main pageTitle={t("nav.posts")} pageDesc={pageDescriptions[locale]}>
+    <ul class="space-y-1">
       {
         page.data.map(({ data, slug }) => (
-          <Card href={`/posts/${slug}/`} frontmatter={data} />
+          <Card
+            href={`${postPath}${slug}/`}
+            frontmatter={data}
+            locale={locale}
+          />
         ))
       }
     </ul>
