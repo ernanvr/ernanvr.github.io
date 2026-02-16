@@ -20,6 +20,9 @@ const posts = await getCollection("blog", ({ data }) => data.lang === locale);
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const hasFeaturedPosts = featuredPosts.length > 0;
+const hasRecentPosts = recentPosts.length > 0;
+const featuredOnly = hasFeaturedPosts && !hasRecentPosts;
 
 const socialCount = SOCIALS.filter(social => social.active).length;
 ---
@@ -74,9 +77,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     <Hr />
 
     {
-      featuredPosts.length > 0 && (
+      hasFeaturedPosts && (
         <>
-          <section id="featured">
+          <section id="featured" class:list={[featuredOnly && "featured-only"]}>
             <h2>{t("home.featured")}</h2>
             <ul class="space-y-1">
               {featuredPosts.map(({ data, slug }) => (
@@ -89,13 +92,13 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               ))}
             </ul>
           </section>
-          {recentPosts.length > 0 && <Hr />}
+          {hasRecentPosts && <Hr />}
         </>
       )
     }
 
     {
-      recentPosts.length > 0 && (
+      hasRecentPosts && (
         <section id="recent-posts">
           <h2>{t("home.recentPosts")}</h2>
           <ul class="space-y-1">
@@ -115,7 +118,12 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       )
     }
 
-    <div class="all-posts-btn-wrapper">
+    <div
+      class:list={[
+        "all-posts-btn-wrapper",
+        featuredOnly && "all-posts-btn-wrapper-compact",
+      ]}
+    >
       <LinkButton href={getLocalizedPath(locale, "posts")}>
         {t("home.allPosts")}
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -164,12 +172,21 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   #recent-posts {
     @apply pb-6 pt-8;
   }
+  #featured.featured-only {
+    @apply pb-2;
+  }
+  #featured.featured-only li {
+    @apply my-4;
+  }
   #featured h2,
   #recent-posts h2 {
     @apply mb-5 text-2xl font-semibold tracking-tight;
   }
   .all-posts-btn-wrapper {
-    @apply my-10 text-center;
+    @apply mb-8 mt-6 text-center sm:my-10;
+  }
+  .all-posts-btn-wrapper-compact {
+    @apply mb-6 mt-4 sm:mb-8 sm:mt-6;
   }
   .all-posts-btn-wrapper a {
     @apply inline-flex items-center gap-1 rounded-lg border border-skin-line/70 bg-paper px-4 py-2 font-mono text-sm shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-skin-line hover:shadow-card-hover;
