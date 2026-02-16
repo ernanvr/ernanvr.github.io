@@ -29,7 +29,6 @@ const {
   pubDatetime,
   modDatetime,
   tags,
-  editPost,
 } = post.data;
 
 const { Content } = await post.render();
@@ -91,9 +90,7 @@ const postPath = getLocalizedPath(locale, "posts");
       pubDatetime={pubDatetime}
       modDatetime={modDatetime}
       size="lg"
-      className="my-2"
-      editPost={editPost}
-      postId={post.id}
+      className="my-4"
       locale={locale}
     />
     <article
