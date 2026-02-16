@@ -33,11 +33,11 @@ const currentLocale = getLocaleFromPath(Astro.url.pathname);
 
 <style>
   .locale-switcher {
-    @apply col-span-2 flex items-center justify-center gap-1 sm:col-span-1;
+    @apply flex items-center justify-center gap-1;
   }
 
   .locale-link {
-    @apply inline-flex w-auto items-center rounded-md border border-transparent px-2 py-1 text-xs font-semibold no-underline opacity-85 hover:border-skin-line/80 hover:bg-skin-card/70 hover:text-skin-accent hover:opacity-100;
+    @apply inline-flex h-11 min-w-11 items-center justify-center rounded-md border border-transparent px-3 py-2 text-sm font-semibold no-underline opacity-85 hover:border-skin-line/80 hover:bg-skin-card/70 hover:text-skin-accent hover:opacity-100 sm:h-8 sm:min-w-9 sm:px-2 sm:py-1 sm:text-xs;
   }
 
   .locale-link-active {
