@@ -1,5 +1,5 @@
 ---
-author: Ernan Velasquez
+author: Ernán Velásquez
 pubDatetime: 2025-05-22T03:57:52.737Z
 modDatetime: 2026-02-14T20:00:00.000Z
 title: Como ganar amigos e influir sobre las personas - Ideas clave
@@ -12,7 +12,7 @@ tags:
   - comunicacion
   - liderazgo
   - relaciones
-description: 21 principios atemporales del clasico de Dale Carnegie sobre relaciones, influencia y comunicacion, con ideas practicas para aplicar de inmediato.
+description: 21 principios atemporales del clásico de Dale Carnegie sobre relaciones, influencia y comunicación, con ideas prácticas para aplicar de inmediato.
 lang: es
 ---
 
@@ -31,7 +31,7 @@ Estas son las ideas clave que cambiaron mi forma de conversar, colaborar e influ
 
 2. **Brinda un aprecio honesto y sincero:**
 
-   - Reconoce y valora a los demas de forma genuina. La apreciación alimenta la ambición y el desarrollo personal.
+   - Reconoce y valora a los demás de forma genuina. La apreciación alimenta la ambición y el desarrollo personal.
    - Se generoso en el reconocimiento y en el elogio, diferenciando el aprecio sincero de la adulación egoísta.
 
 3. **Despierta en la otra persona un deseo intenso:**
@@ -42,7 +42,7 @@ Estas son las ideas clave que cambiaron mi forma de conversar, colaborar e influ
 
 1. **Interésate genuinamente por los demás:**
 
-   - Muestra interes real por la vida y los asuntos de otras personas.
+   - Muestra interés real por la vida y los asuntos de otras personas.
    - Las personas se interesan por quiénes se interesan sinceramente por ellas.
 
 2. **Sonríe:**
