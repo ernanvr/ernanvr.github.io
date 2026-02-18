@@ -211,6 +211,23 @@ Dark mode:
 - Keep commits focused and task-specific.
 - Conventional commit style is preferred (`cz.yaml` uses `cz_conventional_commits`).
 - Avoid unrelated formatting/refactor churn in feature/fix commits.
+- **Prefix every commit title with a gitmoji icon** from [gitmoji.dev](https://gitmoji.dev) that best matches the intent. Use the emoji character directly (not the `:code:` shorthand). Common mappings:
+  - ✨ new feature
+  - 🐛 bug fix
+  - 📝 documentation / content
+  - ♻️ refactor
+  - 🔧 configuration files
+  - 🎨 code structure / formatting
+  - ⚡️ performance improvement
+  - 🌐 i18n / localization
+  - 💄 UI / style changes
+  - 🚑️ critical hotfix
+  - ✅ tests
+  - 👷 CI / build system
+  - 🔖 release / version tag
+  - 🚚 move or rename files
+  - 🗑️ deprecate or remove code
+  - 🩹 simple non-critical fix
 
 ## Cursor and Copilot Rule Files
 Checked requested locations:
