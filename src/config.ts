@@ -12,6 +12,7 @@ export const SITE: Site = {
   postPerPage: 3,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: true,
+  showAbout: false, // Set to true to show About link in navigation
   editPost: {
     url: "https://github.com/ernanvr/ernanvr.github.io/edit/main/src/content/blog",
     text: "Suggest Changes",
