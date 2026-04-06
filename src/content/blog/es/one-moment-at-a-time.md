@@ -5,7 +5,7 @@ modDatetime: 2026-04-05T03:57:52.737Z
 title: Un momento a la vez
 slug: un-momento-a-la-vez
 featured: true
-ogImage: https://user-images.githubusercontent.com/53733092/215771435-25408246-2309-4f8b-a781-1f3d93bdf0ec.png
+ogImage: /assets/one-moment-at-a-time-es.png
 tags:
   - filosofía
 description: Una breve meditación filosófica sobre la relación de nuestra vida con el tiempo.
