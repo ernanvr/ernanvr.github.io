@@ -15,7 +15,24 @@ permissions:
   id-token: write
 
 jobs:
+  audit:
+    name: Security audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: "🔒 Security audit"
+        run: npm audit --audit-level=high
+
   build:
+    needs: audit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
