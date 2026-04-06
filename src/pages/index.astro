@@ -8,6 +8,7 @@ import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
+import { getPostSlug } from "@utils/slugify";
 import { useTranslations } from "@i18n/ui";
 import { getLocalizedPath } from "@i18n/utils";
 import { SITE, SOCIALS } from "@config";
@@ -73,9 +74,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <section id="featured" class:list={[featuredOnly && "featured-only"]}>
             <h2>{t("home.featured")}</h2>
             <ul class="space-y-1">
-              {featuredPosts.map(({ data, slug }) => (
+              {featuredPosts.map(({ data, id }) => (
                 <Card
-                  href={`${getLocalizedPath(locale, "posts")}${slug}/`}
+                  href={`${getLocalizedPath(locale, "posts")}${getPostSlug(id)}/`}
                   frontmatter={data}
                   locale={locale}
                   secHeading={false}
@@ -94,10 +95,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <h2>{t("home.recentPosts")}</h2>
           <ul class="space-y-1">
             {recentPosts.map(
-              ({ data, slug }, index) =>
+              ({ data, id }, index) =>
                 index < SITE.postPerIndex && (
                   <Card
-                    href={`${getLocalizedPath(locale, "posts")}${slug}/`}
+                    href={`${getLocalizedPath(locale, "posts")}${getPostSlug(id)}/`}
                     frontmatter={data}
                     locale={locale}
                     secHeading={false}
