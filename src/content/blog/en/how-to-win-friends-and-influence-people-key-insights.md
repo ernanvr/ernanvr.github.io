@@ -25,12 +25,10 @@ These are the core ideas that changed how I approach conversations, collaboratio
 ### **Fundamental Techniques for Handling People**
 
 1. **Don't Criticize, Condemn, or Complain:**
-
    - Avoid criticism, condemnation, and complaints. No one believes they are guilty, and criticism only generates resentment.
    - Be understanding and capable of forgiving, demonstrating greatness in how you treat others.
 
 2. **Give Honest and Sincere Appreciation:**
-
    - Recognize and value others genuinely. Appreciation is vital nourishment for ambition and personal development.
    - Be hearty in your approval and generous in your praise, differentiating sincere appreciation from selfish flattery.
 
@@ -41,27 +39,22 @@ These are the core ideas that changed how I approach conversations, collaboratio
 ### **6 Ways to Make People Like You**
 
 1. **Become Genuinely Interested in Other People:**
-
    - Show a genuine interest in the lives and affairs of others.
    - Remember that people are interested in those who are sincerely interested in them.
 
 2. **Smile:**
-
    - A smile is a powerful expression that conveys happiness and warmth.
    - Smile when speaking, teaching, or selling, as it improves efficiency and the atmosphere.
 
 3. **Remember a Person's Name:**
-
    - A person's name is the sweetest and most important sound to them in any language.
    - Remembering and using someone's name is a subtle compliment that generates goodwill.
 
 4. **Be a Good Listener and Encourage Others to Talk About Themselves:**
-
    - Give exclusive and absorbed attention to the speaker.
    - Encourage others to share their experiences and problems; sometimes they just need to be heard, not an opinion.
 
 5. **Talk in Terms of the Other Person's Interests:**
-
    - Find out what your interlocutor enjoys and focus the conversation on those topics.
    - Talking about what they are passionate about is the royal road to their heart.
 
@@ -74,57 +67,46 @@ My personal takeaway from this section: when I started entering conversations wi
 ### **Win People to Your Way of Thinking**
 
 1. **The Only Way to Get the Best of an Argument Is to Avoid It:**
-
    - Avoid arguments at all costs. If you win, you make the other person feel inferior and lose their goodwill.
    - Misunderstandings are resolved with tact, diplomacy, and a desire to understand, not with confrontation.
 
 2. **Show Respect for the Other Person's Opinions. Never Say "You're Wrong":**
-
    - Never tell someone directly that they are wrong, as this attacks their pride and judgment.
    - People have prejudices and do not easily change their minds if they feel attacked.
 
 3. **If You Are Wrong, Admit It Quickly and Emphatically:**
-
    - Admitting your own mistakes elevates you and disarms the interlocutor, who will likely adopt a forgiving attitude.
    - It is easier to hear criticism from your own lips than from others.
 
 4. **Begin in a Friendly Way:**
-
    - A friendly attitude convinces more than imposition.
    - Show yourself as a sincere friend; this opens space for reason.
 
 5. **Get the Other Person Saying "Yes, Yes" Immediately:**
-
    - Guide the conversation to obtain a series of affirmative responses from the outset.
    - Once a person says "yes," their pride compels them to be consistent.
 
 6. **Let the Other Person Do a Great Deal of the Talking:**
-
    - Let others talk about their achievements and experiences.
    - If you want to build relationships, give space for them to share their story.
 
 7. **Let the Other Person Feel That the Idea Is His or Hers:**
-
    - Make subtle suggestions and let others come to their own conclusions.
    - People like to feel that their ideas are their own and that they are consulted.
 
 8. **Try Honestly to See Things from the Other Person's Point of View:**
-
    - Strive to understand why the other person thinks and acts as they do.
    - Putting yourself in their shoes will save you irritation and improve your ability to deal with people.
 
 9. **Be Sympathetic with the Other Person's Ideas and Desires:**
-
    - Express understanding and empathy.
    - Compassion and self-control can transform hostility into cooperation.
 
 10. **Appeal to the Nobler Motives:**
-
     - People usually have a "good and worthy" reason for doing things, in addition to the real one.
     - Appeal to their idealism and their desire to be considered honorable and just.
 
 11. **Dramatize Your Ideas:**
-
     - Don't just state the truth; make it vivid, interesting, and dramatic to capture attention.
     - Present your ideas in a way that is memorable and attractive.
 
