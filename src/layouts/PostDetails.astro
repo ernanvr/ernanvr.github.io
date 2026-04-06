@@ -4,7 +4,8 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Tag from "@components/Tag.astro";
 import Datetime from "@components/Datetime";
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
+import { getPostSlug } from "@utils/slugify";
 import { useTranslations } from "@i18n/ui";
 import { getLocalizedPath, type Locale } from "@i18n/utils";
 import { slugifyStr } from "@utils/slugify";
@@ -31,7 +32,7 @@ const {
   tags,
 } = post.data;
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
 const ogUrl = new URL(
@@ -52,12 +53,12 @@ const layoutProps = {
 
 /* ========== Prev/Next Posts ========== */
 
-const allPosts = posts.map(({ data: { title }, slug }) => ({
-  slug,
+const allPosts = posts.map(({ data: { title }, id }) => ({
+  slug: getPostSlug(id),
   title,
 }));
 
-const currentPostIndex = allPosts.findIndex(a => a.slug === post.slug);
+const currentPostIndex = allPosts.findIndex(a => a.slug === getPostSlug(post.id));
 
 const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =

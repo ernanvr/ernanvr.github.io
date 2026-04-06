@@ -8,6 +8,7 @@ import { getLocalizedPath } from "@i18n/utils";
 import Layout from "@layouts/Layout.astro";
 import Main from "@layouts/Main.astro";
 import getPostsByGroupCondition from "@utils/getPostsByGroupCondition";
+import { getPostSlug } from "@utils/slugify";
 
 if (!SITE.showArchives) {
   return Astro.redirect("/404");
@@ -80,9 +81,9 @@ const MonthMap: Record<string, string> = {
                             new Date(a.data.pubDatetime).getTime() / 1000
                           )
                       )
-                      .map(({ data, slug }) => (
+                      .map(({ data, id }) => (
                         <Card
-                          href={`${postPath}${slug}/`}
+                          href={`${postPath}${getPostSlug(id)}/`}
                           frontmatter={data}
                           locale="es"
                         />

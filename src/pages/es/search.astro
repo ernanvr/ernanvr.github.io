@@ -8,6 +8,7 @@ import Footer from "@components/Footer.astro";
 import SearchBar from "@components/Search";
 import { getLocalizedPath } from "@i18n/utils";
 import getSortedPosts from "@utils/getSortedPosts";
+import { getPostSlug } from "@utils/slugify";
 
 const posts = await getCollection(
   "blog",
@@ -15,11 +16,11 @@ const posts = await getCollection(
 );
 const sortedPosts = getSortedPosts(posts);
 
-const searchList = sortedPosts.map(({ data, slug }) => ({
+const searchList = sortedPosts.map(({ data, id }) => ({
   title: data.title,
   description: data.description,
   data,
-  slug,
+  slug: getPostSlug(id),
 }));
 ---
 
