@@ -33,3 +33,6 @@ pnpm-debug.log*
 
 node_modules
 .zed
+
+# Agent tooling
+.atl/
