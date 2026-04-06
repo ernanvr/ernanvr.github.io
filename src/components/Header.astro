@@ -78,14 +78,18 @@ const t = useTranslations(locale);
               {t("nav.tags")}
             </a>
           </li>
-          <li>
-            <a
-              href={getLocalizedPath(locale, "about")}
-              class={activeNav === "about" ? "active" : ""}
-            >
-              {t("nav.about")}
-            </a>
-          </li>
+          {
+            SITE.showAbout && (
+              <li>
+                <a
+                  href={getLocalizedPath(locale, "about")}
+                  class={activeNav === "about" ? "active" : ""}
+                >
+                  {t("nav.about")}
+                </a>
+              </li>
+            )
+          }
           <li>
             <a
               href={getLocalizedPath(locale, "now")}
