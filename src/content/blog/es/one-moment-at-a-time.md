@@ -14,7 +14,7 @@ lang: es
 
 Hoy, mientras regresaba de un viaje de vuelta desde donde vive mi familia en el oriente del país, venía pensando en varias cosas. Una de las más interesantes fue esta: **solo podemos vivir un momento a la vez**.
 
-Esa idea cobra una fuerza especial cuando uno se pregunta: **¿qué diferencia hay realmente entre vivir 10, 20 u 80 años?**
+Esa idea cobra una fuerza especial cuando uno se pregunta: **¿Qué diferencia hay realmente entre vivir 10, 20 u 80 años?**
 
 Un niño, un joven y un adulto probablemente compartirán algo esencial: la sorpresa de enfrentarse a la muerte. La diferencia no estaría tanto en esa sensación, sino en la clase de recuerdos que cada uno llevaría consigo. Cada etapa de la vida deja marcas distintas, y por eso también cambian los recuerdos que se forman en el camino.
 
