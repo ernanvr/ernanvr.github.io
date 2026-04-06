@@ -34,7 +34,8 @@
   }
   body {
     @apply flex min-h-[100svh] flex-col bg-skin-fill font-serif text-skin-base antialiased selection:bg-skin-accent/75 selection:text-skin-inverted;
-    background-image: radial-gradient(
+    background-image:
+      radial-gradient(
         circle at 0% 0%,
         rgb(var(--color-card) / 0.42),
         transparent 45%
