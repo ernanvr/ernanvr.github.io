@@ -50,11 +50,6 @@ const ROUTE_SEGMENTS = {
   },
 } as const;
 
-const POST_SLUG_SUFFIX: Record<Locale, string> = {
-  en: "",
-  es: "-es",
-};
-
 export const getLocaleFromPath = (pathname: string): Locale => {
   if (pathname === "/es" || pathname.startsWith("/es/")) {
     return "es";
@@ -91,20 +86,6 @@ export const localizePath = (
     const routeKey = getRouteKeyBySegment(segments[0]);
     if (routeKey) {
       segments[0] = ROUTE_SEGMENTS[routeKey][targetLocale];
-    }
-
-    if (segments[0] === "posts" && segments[1]) {
-      let baseSlug = segments[1];
-      for (const locale of SUPPORTED_LOCALES) {
-        const suffix = POST_SLUG_SUFFIX[locale];
-        if (suffix && baseSlug.endsWith(suffix)) {
-          baseSlug = baseSlug.slice(0, -suffix.length);
-          break;
-        }
-      }
-
-      const targetSuffix = POST_SLUG_SUFFIX[targetLocale];
-      segments[1] = `${baseSlug}${targetSuffix}`;
     }
   }
 
