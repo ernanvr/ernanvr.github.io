@@ -58,7 +58,9 @@ const allPosts = posts.map(({ data: { title }, id }) => ({
   title,
 }));
 
-const currentPostIndex = allPosts.findIndex(a => a.slug === getPostSlug(post.id));
+const currentPostIndex = allPosts.findIndex(
+  a => a.slug === getPostSlug(post.id)
+);
 
 const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =
@@ -193,6 +195,7 @@ const postPath = getLocalizedPath(locale, "posts");
 </Layout>
 
 <style>
+  @reference "#base.css";
   main {
     @apply mx-auto w-full max-w-3xl px-4 pb-16;
   }
