@@ -1,6 +1,57 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* Breakpoints — sm matches original config, others are kept as defaults */
+  --breakpoint-sm: 640px;
+
+  /* Font families */
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-serif: "Merriweather", "Georgia", serif;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgb(38 32 28 / 0.08), 0 1px 2px rgb(38 32 28 / 0.04);
+  --shadow-card-hover:
+    0 4px 6px rgb(38 32 28 / 0.06), 0 2px 4px rgb(38 32 28 / 0.04);
+
+  /* Skin colors — reference CSS custom properties for dark mode theming.
+     Each color supports opacity modifiers via <alpha-value>. */
+  --color-skin-base: rgb(var(--color-text-base) / <alpha-value>);
+  --color-skin-accent: rgb(var(--color-accent) / <alpha-value>);
+  --color-skin-fill: rgb(var(--color-fill) / <alpha-value>);
+  --color-skin-inverted: rgb(var(--color-fill) / <alpha-value>);
+  --color-skin-card: rgb(var(--color-card) / <alpha-value>);
+  --color-skin-card-muted: rgb(var(--color-card-muted) / <alpha-value>);
+  --color-skin-line: rgb(var(--color-border) / <alpha-value>);
+}
+
+/* Custom background-image utility (replaces v3 backgroundImage.paper) */
+@utility bg-paper {
+  background-image: linear-gradient(
+    140deg,
+    rgb(var(--color-gradient-start)),
+    rgb(var(--color-gradient-end))
+  );
+}
+
+@utility display-none {
+  @apply hidden;
+}
+
+@utility focus-outline {
+  @apply outline-2 outline-offset-1 outline-skin-accent focus-visible:no-underline focus-visible:outline-dashed;
+}
+
+@utility paper-surface {
+  @apply rounded-lg border border-skin-line/70 bg-paper shadow-card;
+}
+
+@utility paper-surface-hover {
+  @apply transition-all duration-200 hover:-translate-y-0.5 hover:border-skin-line hover:shadow-card-hover;
+}
 
 @layer base {
   :root,
@@ -71,7 +122,7 @@
     @apply mx-auto max-w-3xl px-4;
   }
   a {
-    @apply outline-2 outline-offset-1 outline-skin-fill transition-colors duration-200 focus-visible:no-underline focus-visible:outline-dashed;
+    @apply outline-2 outline-offset-1 outline-skin-accent transition-colors duration-200 focus-visible:no-underline focus-visible:outline-dashed;
   }
   svg {
     @apply inline-block h-6 w-6 fill-skin-base group-hover:fill-skin-accent;
@@ -101,6 +152,12 @@
   }
   .prose h2#table-of-contents + p {
     @apply hidden;
+  }
+
+  /* Override @tailwindcss/typography default code/pre colors */
+  .prose pre,
+  .prose code {
+    color: inherit;
   }
 
   /* ===== scrollbar ===== */
@@ -149,20 +206,5 @@
     font-style: var(--shiki-dark-font-style) !important;
     font-weight: var(--shiki-dark-font-weight) !important;
     text-decoration: var(--shiki-dark-text-decoration) !important;
-  }
-}
-
-@layer components {
-  .display-none {
-    @apply hidden;
-  }
-  .focus-outline {
-    @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
-  }
-  .paper-surface {
-    @apply rounded-lg border border-skin-line/70 bg-paper shadow-card;
-  }
-  .paper-surface-hover {
-    @apply transition-all duration-200 hover:-translate-y-0.5 hover:border-skin-line hover:shadow-card-hover;
   }
 }
