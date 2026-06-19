@@ -1,0 +1,38 @@
+{
+	"subagents": {
+		"agentOverrides": {
+			"context-builder": {
+				"model": "opencode-go/kimi-k2.7-code",
+				"thinking": "medium"
+			},
+			"delegate": {
+				"model": "opencode-go/kimi-k2.7-code",
+				"thinking": "medium"
+			},
+			"oracle": {
+				"model": "opencode-go/glm-5.2",
+				"thinking": "high"
+			},
+			"planner": {
+				"model": "opencode-go/glm-5.2",
+				"thinking": "high"
+			},
+			"researcher": {
+				"model": "opencode-go/glm-5.2",
+				"thinking": "medium"
+			},
+			"reviewer": {
+				"model": "opencode-go/glm-5.2",
+				"thinking": "medium"
+			},
+			"scout": {
+				"model": "opencode-go/kimi-k2.7-code",
+				"thinking": "medium"
+			},
+			"worker": {
+				"model": "opencode-go/deepseek-v4-flash",
+				"thinking": "xhigh"
+			}
+		}
+	}
+}

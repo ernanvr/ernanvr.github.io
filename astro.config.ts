@@ -9,6 +9,10 @@ import { SITE } from "./src/config";
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover'
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,
