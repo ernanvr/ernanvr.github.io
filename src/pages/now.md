@@ -4,13 +4,14 @@ title: "Now"
 activeNav: "now"
 ---
 
-_Last updated: April 2026_
+_Last updated: June 2026_
 
 This page is a snapshot of what I am currently focused on.
 
 ## Learning
 
 - AI and LLM fundamentals.
+  - Linear algebra
 - Software architecture.
 - Philosophy.
 - Business model iteration.
