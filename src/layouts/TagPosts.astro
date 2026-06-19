@@ -8,6 +8,7 @@ import Pagination from "@components/Pagination.astro";
 import { useTranslations } from "@i18n/ui";
 import { getLocalizedPath, type Locale } from "@i18n/utils";
 import { SITE } from "@config";
+import { getPostSlug } from "@utils/slugify";
 import type { Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 
@@ -37,9 +38,9 @@ const pageDescriptions = {
     <h1 slot="title" transition:name={tag}>{`${t("nav.tags")}:${tag}`}</h1>
     <ul class="space-y-1">
       {
-        page.data.map(({ data, slug }) => (
+        page.data.map(({ data, id }) => (
           <Card
-            href={`${postPath}${slug}/`}
+            href={`${postPath}${getPostSlug(id)}/`}
             frontmatter={data}
             locale={locale}
           />

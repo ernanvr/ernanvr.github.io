@@ -192,13 +192,13 @@ The highest-value fixes are all low-to-medium effort: **caching Google Fonts dur
 - **Suggested fix:** Add `prefetch: true` or `prefetch: { prefetchAll: true, defaultStrategy: 'hover' }` to `defineConfig`.
 - **Effort:** Low
 
-### 4.3 Tailwind content globs include unused file types
+### 4.3 Tailwind v4 uses CSS-based configuration (no config file)
 
-- **Location:** `tailwind.config.cjs:8`
-- **Problem:** `content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"]` scans `.svelte`, `.vue`, `.mdx`, etc. The project uses none of these. This adds unnecessary filesystem scanning during CSS generation.
-- **Impact:** Build time — **Low**
-- **Suggested fix:** Restrict to `astro,html,js,jsx,ts,tsx,md`.
-- **Effort:** Low
+- **Location:** (formerly `tailwind.config.cjs`, now deleted)
+- **Problem:** The project has migrated to Tailwind v4 which uses CSS-based configuration via `@tailwind` directives. Content scanning is automatic based on module resolution — no manual `content` array is needed. The old `content` glob from the deleted config file is no longer relevant.
+- **Impact:** Build time — **Low** (improved from the old setup)
+- **Suggested fix:** No action needed — Tailwind v4 handles content detection automatically.
+- **Effort:** N/A
 
 ### 4.4 Google Fonts loaded via preload-as-style hack without `display=swap`
 

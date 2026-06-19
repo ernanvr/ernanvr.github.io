@@ -39,3 +39,4 @@ node_modules
 .agent/
 .interface-design/
 sdd/
+pi/
