@@ -17,15 +17,30 @@
   --shadow-card-hover:
     0 4px 6px rgb(38 32 28 / 0.06), 0 2px 4px rgb(38 32 28 / 0.04);
 
-  /* Skin colors — reference CSS custom properties for dark mode theming.
-     Each color supports opacity modifiers via <alpha-value>. */
-  --color-skin-base: rgb(var(--color-text-base) / <alpha-value>);
-  --color-skin-accent: rgb(var(--color-accent) / <alpha-value>);
-  --color-skin-fill: rgb(var(--color-fill) / <alpha-value>);
-  --color-skin-inverted: rgb(var(--color-fill) / <alpha-value>);
-  --color-skin-card: rgb(var(--color-card) / <alpha-value>);
-  --color-skin-card-muted: rgb(var(--color-card-muted) / <alpha-value>);
-  --color-skin-line: rgb(var(--color-border) / <alpha-value>);
+  /* Skin colors are declared in a separate `@theme inline` block below.
+     See that block for the full rationale. */
+}
+
+/* Skin colors are declared with `@theme inline` — the Tailwind v4 idiom for
+   theme vars that reference runtime per-theme CSS vars (--color-text-base,
+   --color-accent, etc.) defined in `:root` and `html[data-theme="dark"]`
+   under `@layer base`. `inline` makes utilities emit the raw
+   `rgb(var(--color-*))` expression directly (rather than a
+   `var(--color-skin-*)` indirection), and the theme var resolves at runtime
+   against the active light/dark scope. Plain `@theme` would also work via
+   lazy custom-property substitution, but `inline` is the recommended idiom
+   and avoids exporting intermediate `--color-skin-*` vars to `:root`.
+   Opacity modifiers (e.g. `text-skin-base/75`) are handled by Tailwind v4
+   via native `color-mix()`, so no v3-era `<alpha-value>` placeholder is
+   needed. */
+@theme inline {
+  --color-skin-base: rgb(var(--color-text-base));
+  --color-skin-accent: rgb(var(--color-accent));
+  --color-skin-fill: rgb(var(--color-fill));
+  --color-skin-inverted: rgb(var(--color-fill));
+  --color-skin-card: rgb(var(--color-card));
+  --color-skin-card-muted: rgb(var(--color-card-muted));
+  --color-skin-line: rgb(var(--color-border));
 }
 
 /* Custom background-image utility (replaces v3 backgroundImage.paper) */
@@ -42,15 +57,15 @@
 }
 
 @utility focus-outline {
-  @apply outline-2 outline-offset-1 outline-skin-accent focus-visible:no-underline focus-visible:outline-dashed;
+  @apply focus-visible:outline-skin-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed;
 }
 
 @utility paper-surface {
-  @apply rounded-lg border border-skin-line/70 bg-paper shadow-card;
+  @apply border-skin-line/70 bg-paper shadow-card rounded-lg border;
 }
 
 @utility paper-surface-hover {
-  @apply transition-all duration-200 hover:-translate-y-0.5 hover:border-skin-line hover:shadow-card-hover;
+  @apply hover:border-skin-line hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5;
 }
 
 @layer base {
@@ -84,7 +99,7 @@
     display: block;
   }
   body {
-    @apply flex min-h-[100svh] flex-col bg-skin-fill font-serif text-skin-base antialiased selection:bg-skin-accent/75 selection:text-skin-inverted;
+    @apply bg-skin-fill text-skin-base selection:bg-skin-accent/75 selection:text-skin-inverted flex min-h-[100svh] flex-col font-serif antialiased;
     background-image:
       radial-gradient(
         circle at 0% 0%,
@@ -103,7 +118,7 @@
   h4,
   h5,
   h6 {
-    @apply font-mono tracking-tight text-skin-base;
+    @apply text-skin-base font-mono tracking-tight;
   }
   p,
   li {
@@ -122,10 +137,10 @@
     @apply mx-auto max-w-3xl px-4;
   }
   a {
-    @apply outline-2 outline-offset-1 outline-skin-accent transition-colors duration-200 focus-visible:no-underline focus-visible:outline-dashed;
+    @apply focus-visible:outline-skin-accent transition-colors duration-200 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed;
   }
   svg {
-    @apply inline-block h-6 w-6 fill-skin-base group-hover:fill-skin-accent;
+    @apply fill-skin-base group-hover:fill-skin-accent inline-block h-6 w-6;
   }
   svg.icon-tabler {
     @apply inline-block h-6 w-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110;
@@ -134,7 +149,7 @@
     @apply prose-headings:!mb-3 prose-headings:font-mono prose-headings:tracking-tight prose-headings:!text-skin-base prose-h3:italic prose-p:font-serif prose-p:leading-8 prose-p:!text-skin-base prose-a:!text-skin-accent prose-a:!decoration-dashed prose-a:underline-offset-8 hover:prose-a:text-skin-accent/80 prose-blockquote:!border-l-skin-accent/50 prose-blockquote:bg-skin-card/40 prose-blockquote:py-1 prose-blockquote:opacity-90 prose-figcaption:!text-skin-base prose-figcaption:opacity-70 prose-strong:!text-skin-base prose-code:rounded prose-code:bg-skin-card/80 prose-code:p-1 prose-code:before:!content-none prose-code:after:!content-none prose-ol:!text-skin-base prose-ul:overflow-x-clip prose-ul:!text-skin-base prose-li:marker:!text-skin-accent prose-table:text-skin-base prose-th:border prose-th:border-skin-line prose-th:bg-skin-card/65 prose-td:border prose-td:border-skin-line prose-img:!my-4 prose-img:mx-auto prose-img:rounded-lg prose-img:border prose-img:border-skin-line prose-hr:!border-skin-line;
   }
   .prose a {
-    @apply break-words hover:!text-skin-accent;
+    @apply hover:!text-skin-accent break-words;
   }
   .prose thead th:first-child,
   tbody td:first-child,
@@ -145,7 +160,7 @@
     @apply mb-2;
   }
   .prose details {
-    @apply inline-block cursor-pointer select-none rounded-md border border-skin-line bg-skin-card/50 px-3 py-2 text-skin-base;
+    @apply border-skin-line bg-skin-card/50 text-skin-base inline-block cursor-pointer rounded-md border px-3 py-2 select-none;
   }
   .prose summary {
     @apply focus-outline;
@@ -187,7 +202,7 @@
 
   /* ===== Code Blocks & Syntax Highlighting ===== */
   pre:has(code) {
-    @apply rounded-lg border border-skin-line/80 bg-skin-card/70 shadow-card;
+    @apply border-skin-line/80 bg-skin-card/70 shadow-card rounded-lg border;
   }
   code,
   blockquote {
