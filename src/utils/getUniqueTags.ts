@@ -8,16 +8,18 @@ interface Tag {
 }
 
 const getUniqueTags = (posts: CollectionEntry<"blog">[]) => {
-  const tags: Tag[] = posts
-    .filter(postFilter)
-    .flatMap(post => post.data.tags)
-    .map(tag => ({ tag: slugifyStr(tag), tagName: tag }))
-    .filter(
-      (value, index, self) =>
-        self.findIndex(tag => tag.tag === value.tag) === index
-    )
-    .sort((tagA, tagB) => tagA.tag.localeCompare(tagB.tag));
-  return tags;
+  const seen = new Set<string>();
+  const tags: Tag[] = [];
+  for (const post of posts.filter(postFilter)) {
+    for (const tag of post.data.tags) {
+      const slug = slugifyStr(tag);
+      if (!seen.has(slug)) {
+        seen.add(slug);
+        tags.push({ tag: slug, tagName: tag });
+      }
+    }
+  }
+  return tags.sort((tagA, tagB) => tagA.tag.localeCompare(tagB.tag));
 };
 
 export default getUniqueTags;
