@@ -1,5 +1,4 @@
 ---
-import { getCollection } from "astro:content";
 import { SITE } from "@config";
 import Layout from "@layouts/Layout.astro";
 import Main from "@layouts/Main.astro";
@@ -7,14 +6,10 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import SearchBar from "@components/Search";
 import { getLocalizedPath } from "@i18n/utils";
-import getSortedPosts from "@utils/getSortedPosts";
+import { getSortedPostsByLocale } from "@utils/posts";
 import { getPostSlug } from "@utils/slugify";
 
-const posts = await getCollection(
-  "blog",
-  ({ data }) => !data.draft && data.lang === "es"
-);
-const sortedPosts = getSortedPosts(posts);
+const sortedPosts = await getSortedPostsByLocale("es");
 
 const searchList = sortedPosts.map(({ data, id }) => ({
   title: data.title,
