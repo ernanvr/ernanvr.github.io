@@ -7,10 +7,14 @@ interface Tag {
   tagName: string;
 }
 
-const getUniqueTags = (posts: CollectionEntry<"blog">[]) => {
+const getUniqueTags = (
+  posts: CollectionEntry<"blog">[],
+  skipPostFilter?: boolean
+) => {
   const seen = new Set<string>();
   const tags: Tag[] = [];
-  for (const post of posts.filter(postFilter)) {
+  const filtered = skipPostFilter ? posts : posts.filter(postFilter);
+  for (const post of filtered) {
     for (const tag of post.data.tags) {
       const slug = slugifyStr(tag);
       if (!seen.has(slug)) {
