@@ -28,7 +28,7 @@ export const getSortedPostsByLocale = async (
   locale: Locale
 ): Promise<CollectionEntry<"blog">[]> => {
   if (!sortedCache.has(locale)) {
-    sortedCache.set(locale, getSortedPosts(await getAllPosts(locale), true));
+    sortedCache.set(locale, getSortedPosts(await getAllPosts(locale)));
   }
   return sortedCache.get(locale)!;
 };
@@ -37,7 +37,7 @@ export const getUniqueTagsByLocale = async (
   locale: Locale
 ): Promise<{ tag: string; tagName: string }[]> => {
   if (!tagsCache.has(locale)) {
-    tagsCache.set(locale, getUniqueTags(await getAllPosts(locale), true));
+    tagsCache.set(locale, getUniqueTags(await getAllPosts(locale)));
   }
   return tagsCache.get(locale)!;
 };

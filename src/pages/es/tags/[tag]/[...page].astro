@@ -1,12 +1,12 @@
 ---
 import TagPosts from "@layouts/TagPosts.astro";
 import getPostsByTag from "@utils/getPostsByTag";
-import { getAllPosts, getUniqueTagsByLocale } from "@utils/posts";
+import { getSortedPostsByLocale, getUniqueTagsByLocale } from "@utils/posts";
 import type { GetStaticPathsOptions } from "astro";
 import { SITE } from "@config";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = await getAllPosts("es");
+  const posts = await getSortedPostsByLocale("es");
   const tags = await getUniqueTagsByLocale("es");
 
   return tags.flatMap(({ tag, tagName }) => {
