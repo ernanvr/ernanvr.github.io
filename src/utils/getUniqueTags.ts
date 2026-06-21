@@ -1,6 +1,5 @@
 import { slugifyStr } from "./slugify";
 import type { CollectionEntry } from "astro:content";
-import postFilter from "./postFilter";
 
 interface Tag {
   tag: string;
@@ -10,7 +9,7 @@ interface Tag {
 const getUniqueTags = (posts: CollectionEntry<"blog">[]) => {
   const seen = new Set<string>();
   const tags: Tag[] = [];
-  for (const post of posts.filter(postFilter)) {
+  for (const post of posts) {
     for (const tag of post.data.tags) {
       const slug = slugifyStr(tag);
       if (!seen.has(slug)) {

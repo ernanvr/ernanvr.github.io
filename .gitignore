@@ -39,4 +39,7 @@ node_modules
 .agent/
 .interface-design/
 sdd/
-pi/
+.pi/
+docs/engram
+docs/.obsidian
+openspec/
