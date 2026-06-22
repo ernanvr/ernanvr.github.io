@@ -16,7 +16,13 @@ if (!SITE.showArchives) {
 }
 
 const posts = await getAllPosts("en");
-const archivedPosts = posts.filter(post => post.data.archived);
+const archivedPosts = [...posts]
+  .filter(post => post.data.archived)
+  .sort(
+    (a, b) =>
+      Math.floor(new Date(b.data.pubDatetime).getTime() / 1000) -
+      Math.floor(new Date(a.data.pubDatetime).getTime() / 1000)
+  );
 
 const postPath = getLocalizedPath("en", "posts");
 
@@ -41,7 +47,7 @@ const MonthMap: Record<string, string> = {
   <Main pageTitle="Archives" pageDesc="All the articles I've archived.">
     {
       archivedPosts.length === 0 ? (
-        <p class="text-center text-lg text-skin-base">
+        <p class="text-skin-base text-center text-lg">
           No archived articles yet.
         </p>
       ) : (
@@ -53,10 +59,10 @@ const MonthMap: Record<string, string> = {
           .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
           .map(([year, yearGroup]) => (
             <div class="mb-10">
-              <span class="font-mono text-2xl font-bold text-skin-accent">
+              <span class="text-skin-accent font-mono text-2xl font-bold">
                 {year}
               </span>
-              <sup class="ml-1 font-mono text-xs text-skin-base/75">
+              <sup class="text-skin-base/75 ml-1 font-mono text-xs">
                 {yearGroup.length}
               </sup>
               {Object.entries(
@@ -70,28 +76,18 @@ const MonthMap: Record<string, string> = {
                   <div class="flex flex-col sm:flex-row sm:gap-4">
                     <div class="mt-6 min-w-36 text-lg sm:my-6">
                       <span class="font-mono font-bold">{MonthMap[month]}</span>
-                      <sup class="ml-1 font-mono text-xs text-skin-base/75">
+                      <sup class="text-skin-base/75 ml-1 font-mono text-xs">
                         {monthGroup.length}
                       </sup>
                     </div>
                     <ul>
-                      {monthGroup
-                        .sort(
-                          (a, b) =>
-                            Math.floor(
-                              new Date(b.data.pubDatetime).getTime() / 1000
-                            ) -
-                            Math.floor(
-                              new Date(a.data.pubDatetime).getTime() / 1000
-                            )
-                        )
-                        .map(({ data, id }) => (
-                          <Card
-                            href={`${postPath}${getPostSlug(id)}/`}
-                            frontmatter={data}
-                            locale="en"
-                          />
-                        ))}
+                      {monthGroup.map(({ data, id }) => (
+                        <Card
+                          href={`${postPath}${getPostSlug(id)}/`}
+                          frontmatter={data}
+                          locale="en"
+                        />
+                      ))}
                     </ul>
                   </div>
                 ))}
