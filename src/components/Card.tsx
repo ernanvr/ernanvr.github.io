@@ -32,7 +32,7 @@ export default function Card({
     <li className="paper-surface paper-surface-hover my-6 p-5 sm:p-6">
       <a
         href={href}
-        className="inline-block text-skin-accent decoration-dashed focus-visible:no-underline focus-visible:underline-offset-0"
+        className="text-skin-accent inline-block decoration-dashed focus-visible:no-underline focus-visible:underline-offset-0"
       >
         {secHeading ? (
           <h2 {...headerProps}>{title}</h2>
@@ -46,7 +46,7 @@ export default function Card({
         className="mt-2"
         locale={locale}
       />
-      <p className="mt-3 text-[0.98rem] leading-7 text-skin-base/90">
+      <p className="text-skin-base/90 mt-3 text-[0.98rem] leading-7">
         {description}
       </p>
     </li>
