@@ -9,6 +9,7 @@ import Main from "@layouts/Main.astro";
 import getPostsByGroupCondition from "@utils/getPostsByGroupCondition";
 import { getPostSlug } from "@utils/slugify";
 import { getAllPosts } from "@utils/posts";
+import monthName from "@utils/monthName";
 
 if (!SITE.showArchives) {
   return Astro.redirect("/404");
@@ -24,21 +25,6 @@ const archivedPosts = [...posts]
   );
 
 const postPath = getLocalizedPath("es", "posts");
-
-const MonthMap: Record<string, string> = {
-  "1": "Enero",
-  "2": "Febrero",
-  "3": "Marzo",
-  "4": "Abril",
-  "5": "Mayo",
-  "6": "Junio",
-  "7": "Julio",
-  "8": "Agosto",
-  "9": "Septiembre",
-  "10": "Octubre",
-  "11": "Noviembre",
-  "12": "Diciembre",
-};
 ---
 
 <Layout title={`Archivos | ${SITE.title}`}>
@@ -74,7 +60,9 @@ const MonthMap: Record<string, string> = {
                 .map(([month, monthGroup]) => (
                   <div class="flex flex-col sm:flex-row sm:gap-4">
                     <div class="mt-6 min-w-36 text-lg sm:my-6">
-                      <span class="font-mono font-bold">{MonthMap[month]}</span>
+                      <span class="font-mono font-bold">
+                        {monthName("es", Number(month))}
+                      </span>
                       <sup class="text-skin-base/75 ml-1 font-mono text-xs">
                         {monthGroup.length}
                       </sup>
