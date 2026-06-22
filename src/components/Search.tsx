@@ -3,12 +3,12 @@ import { useEffect, useRef, useState, useMemo, type FormEvent } from "react";
 import Card from "@components/Card";
 import { useTranslations } from "@i18n/ui";
 import { type Locale } from "@i18n/utils";
-import type { CollectionEntry } from "astro:content";
 
 export type SearchItem = {
   title: string;
   description: string;
-  data: CollectionEntry<"blog">["data"];
+  pubDatetime: string;
+  modDatetime?: string | null;
   slug: string;
 };
 
@@ -126,7 +126,12 @@ export default function SearchBar({
           searchResults.map(({ item, refIndex }) => (
             <Card
               href={`${postPathPrefix}${item.slug}/`}
-              frontmatter={item.data}
+              frontmatter={{
+                title: item.title,
+                description: item.description,
+                pubDatetime: item.pubDatetime,
+                modDatetime: item.modDatetime,
+              }}
               locale={locale}
               key={`${refIndex}-${item.slug}`}
             />

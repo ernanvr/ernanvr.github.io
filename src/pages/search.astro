@@ -16,7 +16,8 @@ const sortedPosts = await getSortedPostsByLocale("en");
 const searchList = sortedPosts.map(({ data, id }) => ({
   title: data.title,
   description: data.description,
-  data,
+  pubDatetime: data.pubDatetime.toISOString(),
+  modDatetime: data.modDatetime ? data.modDatetime.toISOString() : null,
   slug: getPostSlug(id),
 }));
 ---
@@ -25,7 +26,7 @@ const searchList = sortedPosts.map(({ data, id }) => ({
   <Header activeNav="search" />
   <Main pageTitle="Search" pageDesc="Search any article ...">
     <SearchBar
-      client:load
+      client:idle
       searchList={searchList}
       locale="en"
       postPathPrefix={getLocalizedPath("en", "posts")}
