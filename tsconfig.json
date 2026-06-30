@@ -6,6 +6,7 @@
     "paths": {
       "@assets/*": ["assets/*"],
       "@config": ["config.ts"],
+      "@components/Card": ["components/Card.astro"],
       "@components/Datetime": ["components/Datetime.astro"],
       "@components/*": ["components/*"],
       "@content/*": ["content/*"],
