@@ -4,7 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import SearchBar from "@components/Search";
+import Search from "@components/Search.astro";
 import { getLocalizedPath } from "@i18n/utils";
 import { getSortedPostsByLocale } from "@utils/posts";
 import { getPostSlug } from "@utils/slugify";
@@ -25,8 +25,7 @@ const searchList = sortedPosts.map(({ data, id }) => ({
 <Layout title={`Search | ${SITE.title}`}>
   <Header activeNav="search" />
   <Main pageTitle="Search" pageDesc="Search any article ...">
-    <SearchBar
-      client:idle
+    <Search
       searchList={searchList}
       locale="en"
       postPathPrefix={getLocalizedPath("en", "posts")}

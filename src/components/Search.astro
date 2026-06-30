@@ -1,0 +1,224 @@
+---
+import { useTranslations } from "@i18n/ui";
+import { getLangTag, type Locale } from "@i18n/utils";
+import { slugifyStr } from "@utils/slugify";
+
+export interface Props {
+  searchList: SearchItem[];
+  locale: Locale;
+  postPathPrefix: string;
+}
+
+export interface SearchItem {
+  title: string;
+  description: string;
+  pubDatetime: string;
+  modDatetime: string | null;
+  slug: string;
+}
+
+const { searchList, locale, postPathPrefix } = Astro.props;
+const t = useTranslations(locale);
+
+const enhancedList = searchList.map(item => ({
+  ...item,
+  titleSlug: slugifyStr(item.title),
+}));
+
+const i18n = {
+  search: t("search.search"),
+  placeholder: t("search.placeholder"),
+  found: t("search.found"),
+  result: t("search.result"),
+  results: t("search.results"),
+  for: t("search.for"),
+  datetimeUpdated: t("datetime.updated"),
+  datetimePublished: t("datetime.published"),
+};
+
+const config = {
+  searchList: enhancedList,
+  postPathPrefix,
+  i18n,
+  langTag: getLangTag(locale),
+};
+
+const safeJson = JSON.stringify(config).replace(/</g, "\\u003c");
+---
+
+<label class="relative block">
+  <span
+    class="text-skin-accent/80 absolute inset-y-0 left-0 flex items-center pl-3"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path
+        d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
+      ></path>
+    </svg>
+    <span class="sr-only">{i18n.search}</span>
+  </span>
+  <input
+    class="focus:ring-skin-accent/20 border-skin-line/70 bg-skin-card/70 placeholder:text-skin-base/60 focus:border-skin-accent block w-full rounded-lg border py-3 pr-3 pl-11 font-serif text-[1.01rem] placeholder:font-serif placeholder:italic focus:ring-2 focus:outline-none"
+    placeholder={i18n.placeholder}
+    type="text"
+    name="search"
+    autocomplete="off"
+    data-search-input
+  />
+</label>
+
+<div
+  class="border-skin-line/70 bg-skin-card/60 mt-8 rounded-md border px-3 py-2 font-mono text-sm"
+  data-search-status
+  hidden
+>
+</div>
+
+<ul data-search-results></ul>
+
+<script type="application/json" data-search-config set:html={safeJson} />
+
+<script>
+  interface SearchItem {
+    title: string;
+    description: string;
+    pubDatetime: string;
+    modDatetime: string | null;
+    slug: string;
+    titleSlug: string;
+  }
+
+  interface SearchConfig {
+    searchList: SearchItem[];
+    postPathPrefix: string;
+    i18n: {
+      search: string;
+      placeholder: string;
+      found: string;
+      result: string;
+      results: string;
+      for: string;
+      datetimeUpdated: string;
+      datetimePublished: string;
+    };
+    langTag: string;
+  }
+
+  const initSearch = () => {
+    const configEl = document.querySelector("[data-search-config]");
+    const input = document.querySelector<HTMLInputElement>(
+      "[data-search-input]"
+    );
+    const status = document.querySelector<HTMLDivElement>(
+      "[data-search-status]"
+    );
+    const results = document.querySelector<HTMLUListElement>(
+      "[data-search-results]"
+    );
+
+    if (!configEl || !input || !status || !results) return;
+
+    const config: SearchConfig = JSON.parse(configEl.textContent || "{}");
+    const { searchList, postPathPrefix, i18n, langTag } = config;
+
+    const escapeHtml = (s: string) =>
+      s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const filterPosts = (items: SearchItem[], query: string): SearchItem[] => {
+      if (query.length < 2) return [];
+      const q = query.toLowerCase();
+      return items.filter(
+        item =>
+          item.title.toLowerCase().includes(q) ||
+          item.description.toLowerCase().includes(q)
+      );
+    };
+
+    const pickDatetime = (pubDatetime: string, modDatetime: string | null) => {
+      return modDatetime && new Date(modDatetime) > new Date(pubDatetime)
+        ? new Date(modDatetime)
+        : new Date(pubDatetime);
+    };
+
+    const renderCard = (item: SearchItem): string => {
+      const myDatetime = pickDatetime(item.pubDatetime, item.modDatetime);
+      const dateStr = myDatetime.toLocaleDateString(langTag, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+      const isUpdated =
+        item.modDatetime &&
+        new Date(item.modDatetime) > new Date(item.pubDatetime);
+      const dateLabel = isUpdated
+        ? `<span class="text-sm font-mono">${escapeHtml(i18n.datetimeUpdated)}</span>`
+        : `<span class="sr-only">${escapeHtml(i18n.datetimePublished)}</span>`;
+
+      return `<li class="paper-surface paper-surface-hover my-6 p-5 sm:p-6">
+      <a class="text-skin-accent inline-block decoration-dashed focus-visible:no-underline focus-visible:underline-offset-0" href="${escapeHtml(postPathPrefix)}${escapeHtml(item.slug)}/">
+        <h2 style="view-transition-name:${escapeHtml(item.titleSlug)}" class="text-xl font-semibold decoration-dashed underline-offset-4 hover:underline">${escapeHtml(item.title)}</h2>
+      </a>
+      <div class="flex items-center space-x-2 text-skin-base/75 mt-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="scale-90 inline-block h-6 w-6 min-w-[1.375rem] fill-skin-accent/85" aria-hidden="true">
+          <path d="M7 11h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2z"></path>
+          <path d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM19 8l.001 12H5V8h14z"></path>
+        </svg>
+        ${dateLabel}
+        <span class="text-sm font-mono"><time datetime="${myDatetime.toISOString()}">${dateStr}</time></span>
+      </div>
+      <p class="text-skin-base/90 mt-3 text-[0.98rem] leading-7">${escapeHtml(item.description)}</p>
+    </li>`;
+    };
+
+    const updateUrl = () => {
+      const value = input.value;
+      if (value.length > 0) {
+        const params = new URLSearchParams(window.location.search);
+        params.set("q", value);
+        history.replaceState(
+          history.state,
+          "",
+          `${window.location.pathname}?${params.toString()}`
+        );
+      } else {
+        history.replaceState(history.state, "", window.location.pathname);
+      }
+    };
+
+    const render = () => {
+      const query = input.value;
+      const filtered = filterPosts(searchList, query);
+
+      if (query.length < 2) {
+        status.hidden = true;
+        results.innerHTML = "";
+        return;
+      }
+
+      status.hidden = false;
+      status.textContent = `${i18n.found} ${filtered.length} ${filtered.length === 1 ? i18n.result : i18n.results} ${i18n.for} '${query}'`;
+      results.innerHTML = filtered.map(renderCard).join("");
+    };
+
+    input.addEventListener("input", () => {
+      render();
+      updateUrl();
+    });
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const initialQuery = searchParams.get("q") || "";
+    input.value = initialQuery;
+    render();
+    updateUrl();
+
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+  };
+
+  initSearch();
+</script>
