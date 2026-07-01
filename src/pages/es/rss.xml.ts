@@ -2,15 +2,19 @@ import rss from "@astrojs/rss";
 import { getSortedPostsByLocale } from "@utils/posts";
 import { getPostSlug } from "@utils/slugify";
 import { SITE } from "@config";
+import { getRssConfig } from "@utils/rssConfig";
 
 export async function GET() {
-  const sortedPosts = await getSortedPostsByLocale("es");
+  const locale = "es";
+  const sortedPosts = await getSortedPostsByLocale(locale);
+  const { title, linkPrefix } = getRssConfig(locale);
+
   return rss({
-    title: `${SITE.title} - Espanol LATAM`,
+    title,
     description: SITE.desc,
     site: SITE.website,
     items: sortedPosts.map(({ data, id }) => ({
-      link: `es/posts/${getPostSlug(id)}/`,
+      link: `${linkPrefix}${getPostSlug(id)}/`,
       title: data.title,
       description: data.description,
       pubDate: new Date(data.modDatetime ?? data.pubDatetime),
