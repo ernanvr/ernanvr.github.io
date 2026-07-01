@@ -1,15 +1,7 @@
 ---
-import Card from "@components/Card.astro";
-import Footer from "@components/Footer.astro";
-import Header from "@components/Header.astro";
+import Archives from "@layouts/Archives.astro";
 import { SITE } from "@config";
-import { getLocalizedPath } from "@i18n/utils";
-import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
-import getPostsByGroupCondition from "@utils/getPostsByGroupCondition";
-import { getPostSlug } from "@utils/slugify";
 import { getAllPosts } from "@utils/posts";
-import monthName from "@utils/monthName";
 
 // Redirect to 404 page if `showArchives` config is false
 if (!SITE.showArchives) {
@@ -24,66 +16,6 @@ const archivedPosts = [...posts]
       Math.floor(new Date(b.data.pubDatetime).getTime() / 1000) -
       Math.floor(new Date(a.data.pubDatetime).getTime() / 1000)
   );
-
-const postPath = getLocalizedPath("en", "posts");
 ---
 
-<Layout title={`Archives | ${SITE.title}`}>
-  <Header activeNav="archives" />
-  <Main pageTitle="Archives" pageDesc="All the articles I've archived.">
-    {
-      archivedPosts.length === 0 ? (
-        <p class="text-skin-base text-center text-lg">
-          No archived articles yet.
-        </p>
-      ) : (
-        Object.entries(
-          getPostsByGroupCondition(archivedPosts, post =>
-            post.data.pubDatetime.getFullYear()
-          )
-        )
-          .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-          .map(([year, yearGroup]) => (
-            <div class="mb-10">
-              <span class="text-skin-accent font-mono text-2xl font-bold">
-                {year}
-              </span>
-              <sup class="text-skin-base/75 ml-1 font-mono text-xs">
-                {yearGroup.length}
-              </sup>
-              {Object.entries(
-                getPostsByGroupCondition(
-                  yearGroup,
-                  post => post.data.pubDatetime.getMonth() + 1
-                )
-              )
-                .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
-                .map(([month, monthGroup]) => (
-                  <div class="flex flex-col sm:flex-row sm:gap-4">
-                    <div class="mt-6 min-w-36 text-lg sm:my-6">
-                      <span class="font-mono font-bold">
-                        {monthName("en", Number(month))}
-                      </span>
-                      <sup class="text-skin-base/75 ml-1 font-mono text-xs">
-                        {monthGroup.length}
-                      </sup>
-                    </div>
-                    <ul>
-                      {monthGroup.map(({ data, id }) => (
-                        <Card
-                          href={`${postPath}${getPostSlug(id)}/`}
-                          frontmatter={data}
-                          locale="en"
-                        />
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-            </div>
-          ))
-      )
-    }
-  </Main>
-
-  <Footer />
-</Layout>
+<Archives locale="en" {archivedPosts} />
