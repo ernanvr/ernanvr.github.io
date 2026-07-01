@@ -1,27 +1,18 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import PostDetails from "@layouts/PostDetails.astro";
-import { getPostSlug } from "@utils/slugify";
 import { getSortedPostsByLocale } from "@utils/posts";
+import { getPostDetailsStaticPaths } from "@utils/staticPaths";
 
 export interface Props {
   post: CollectionEntry<"blog">;
 }
 
 export async function getStaticPaths() {
-  const posts = await getSortedPostsByLocale("en");
-
-  const postResult = posts.map(post => ({
-    params: { slug: getPostSlug(post.id) },
-    props: { post },
-  }));
-
-  return postResult;
+  return getPostDetailsStaticPaths("en");
 }
-
-const { post } = Astro.props;
 
 const sortedPosts = await getSortedPostsByLocale("en");
 ---
 
-<PostDetails post={post} posts={sortedPosts} locale="en" />
+<PostDetails post={Astro.props.post} posts={sortedPosts} locale="en" />
