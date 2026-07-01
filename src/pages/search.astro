@@ -1,19 +1,14 @@
 ---
-import { SITE } from "@config";
-import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import Search from "@components/Search.astro";
-import { getLocalizedPath } from "@i18n/utils";
+import Search from "@layouts/Search.astro";
 import { getSortedPostsByLocale } from "@utils/posts";
 import { getPostSlug } from "@utils/slugify";
+import type { SearchItem } from "@components/Search.astro";
 
 // Retrieve all published articles
 const sortedPosts = await getSortedPostsByLocale("en");
 
 // List of items to search in
-const searchList = sortedPosts.map(({ data, id }) => ({
+const searchList: SearchItem[] = sortedPosts.map(({ data, id }) => ({
   title: data.title,
   description: data.description,
   pubDatetime: data.pubDatetime.toISOString(),
@@ -22,14 +17,4 @@ const searchList = sortedPosts.map(({ data, id }) => ({
 }));
 ---
 
-<Layout title={`Search | ${SITE.title}`}>
-  <Header activeNav="search" />
-  <Main pageTitle="Search" pageDesc="Search any article ...">
-    <Search
-      searchList={searchList}
-      locale="en"
-      postPathPrefix={getLocalizedPath("en", "posts")}
-    />
-  </Main>
-  <Footer />
-</Layout>
+<Search locale="en" {searchList} />
