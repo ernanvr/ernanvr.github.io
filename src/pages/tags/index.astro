@@ -1,21 +1,8 @@
 ---
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
-import Tag from "@components/Tag.astro";
+import TagsIndex from "@layouts/TagsIndex.astro";
 import { getUniqueTagsByLocale } from "@utils/posts";
-import { SITE } from "@config";
 
 const tags = await getUniqueTagsByLocale("en");
 ---
 
-<Layout title={`Tags | ${SITE.title}`}>
-  <Header activeNav="tags" />
-  <Main pageTitle="Tags" pageDesc="All the tags used in posts.">
-    <ul class="flex flex-wrap gap-y-2">
-      {tags.map(({ tag }) => <Tag {tag} size="lg" locale="en" />)}
-    </ul>
-  </Main>
-  <Footer />
-</Layout>
+<TagsIndex locale="en" {tags} />
