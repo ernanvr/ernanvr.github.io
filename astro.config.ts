@@ -13,6 +13,11 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "hover",
   },
+  image: {
+    remotePatterns: [
+      { protocol: "https", hostname: "user-images.githubusercontent.com" },
+    ],
+  },
   integrations: [
     sitemap({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
