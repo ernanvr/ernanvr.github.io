@@ -37,9 +37,13 @@ node_modules
 # Agent tooling
 .atl/
 .agent/
+.agents/
+.claude/
+.codegraph/
 .interface-design/
-sdd/
 .pi/
+.vscode/
+sdd/
 docs/engram
 docs/.obsidian
 openspec/
