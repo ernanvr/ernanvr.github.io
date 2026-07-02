@@ -1,29 +1,15 @@
 ---
 import TagPosts from "@layouts/TagPosts.astro";
-import buildTagPostsMap from "@utils/buildTagPostsMap";
-import { getSortedPostsByLocale, getUniqueTagsByLocale } from "@utils/posts";
-import type { GetStaticPathsOptions } from "astro";
-import { SITE } from "@config";
+import type { GetStaticPaths } from "astro";
+import { getTagPostsStaticPaths } from "@utils/staticPaths";
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = await getSortedPostsByLocale("es");
-  const tags = await getUniqueTagsByLocale("es");
-  const tagPostsMap = buildTagPostsMap(posts);
-
-  return tags.flatMap(({ tag, tagName }) => {
-    const tagPosts = tagPostsMap.get(tag) ?? [];
-
-    return paginate(tagPosts, {
-      params: { tag },
-      props: { tagName },
-      pageSize: SITE.postPerPage,
-    });
-  });
-}
-
-const params = Astro.params;
-const { tag } = params;
-const { page, tagName } = Astro.props;
+export const getStaticPaths = (async options =>
+  getTagPostsStaticPaths("es", options)) satisfies GetStaticPaths;
 ---
 
-<TagPosts {page} {tag} {tagName} locale="es" />
+<TagPosts
+  page={Astro.props.page}
+  tag={Astro.params.tag}
+  tagName={Astro.props.tagName}
+  locale="es"
+/>
