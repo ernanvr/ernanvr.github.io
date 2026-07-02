@@ -1,0 +1,30 @@
+---
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import SearchComponent, { type SearchItem } from "@components/Search.astro";
+import { SITE } from "@config";
+import { useTranslations } from "@i18n/ui";
+import { getLocalizedPath, type Locale } from "@i18n/utils";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+
+export interface Props {
+  locale: Locale;
+  searchList: SearchItem[];
+}
+
+const { locale, searchList } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Layout title={`${t("page.search.title")} | ${SITE.title}`}>
+  <Header activeNav="search" />
+  <Main pageTitle={t("page.search.title")} pageDesc={t("page.search.desc")}>
+    <SearchComponent
+      searchList={searchList}
+      {locale}
+      postPathPrefix={getLocalizedPath(locale, "posts")}
+    />
+  </Main>
+  <Footer />
+</Layout>
