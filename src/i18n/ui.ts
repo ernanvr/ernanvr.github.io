@@ -93,6 +93,14 @@ const ui = {
 
 type TranslationKey = keyof (typeof ui)[typeof DEFAULT_LOCALE];
 
+const translators = new Map<Locale, (key: TranslationKey) => string>();
+
 export const useTranslations = (locale: Locale) => {
-  return (key: TranslationKey) => ui[locale][key] ?? ui[DEFAULT_LOCALE][key];
+  const cached = translators.get(locale);
+  if (cached) return cached;
+
+  const translator = (key: TranslationKey) =>
+    ui[locale][key] ?? ui[DEFAULT_LOCALE][key];
+  translators.set(locale, translator);
+  return translator;
 };
