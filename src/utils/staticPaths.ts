@@ -1,7 +1,11 @@
 import { SITE } from "@config";
 import type { Locale } from "@i18n/utils";
 import buildTagPostsMap from "@utils/buildTagPostsMap";
-import { getSortedPostsByLocale, getUniqueTagsByLocale } from "@utils/posts";
+import {
+  getAllSortedPostsByLocale,
+  getSortedPostsByLocale,
+  getUniqueTagsByLocale,
+} from "@utils/posts";
 import { getPostSlug } from "@utils/slugify";
 import type { GetStaticPathsOptions } from "astro";
 
@@ -14,7 +18,8 @@ export async function getPostsStaticPaths(
 }
 
 export async function getPostDetailsStaticPaths(locale: Locale) {
-  const posts = await getSortedPostsByLocale(locale);
+  // Archived posts keep their detail page so the archives pages can link to it.
+  const posts = await getAllSortedPostsByLocale(locale);
 
   return posts.map(post => ({
     params: { slug: getPostSlug(post.id) },

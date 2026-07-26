@@ -29,7 +29,6 @@ type NamedRoute =
   | "posts"
   | "tags"
   | "about"
-  | "now"
   | "uses"
   | "archives"
   | "search"
@@ -39,10 +38,6 @@ const ROUTE_SEGMENTS = {
   about: {
     en: "about",
     es: "sobre-mi",
-  },
-  now: {
-    en: "now",
-    es: "ahora",
   },
   uses: {
     en: "uses",
@@ -110,7 +105,6 @@ export const getLocalizedPath = (locale: Locale, route: NamedRoute): string => {
     posts: "/posts/",
     tags: "/tags/",
     about: "/about/",
-    now: "/now/",
     uses: "/uses/",
     archives: "/archives/",
     search: "/search/",

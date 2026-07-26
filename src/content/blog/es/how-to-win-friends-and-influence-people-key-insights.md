@@ -4,13 +4,9 @@ pubDatetime: 2025-05-22T03:57:52.737Z
 modDatetime: 2026-02-14T20:00:00.000Z
 title: Como ganar amigos e influir sobre las personas - Ideas clave
 slug: how-to-win-friends-and-influence-people-key-insights-es
-featured: true
+archived: true
 ogImage: https://user-images.githubusercontent.com/53733092/215771435-25408246-2309-4f8b-a781-1f3d93bdf0ec.png
 tags:
-  - resumen-libro
-  - desarrollo-personal
-  - comunicacion
-  - liderazgo
   - relaciones
 description: 21 principios atemporales del clásico de Dale Carnegie sobre relaciones, influencia y comunicación, con ideas prácticas para aplicar de inmediato.
 lang: es

@@ -4,13 +4,9 @@ pubDatetime: 2025-05-22T03:57:52.737Z
 modDatetime: 2026-02-14T20:00:00.000Z
 title: How to Win Friends and Influence People - Key Insights
 slug: how-to-win-friends-and-influence-people-key-insights
-featured: true
+archived: true
 ogImage: https://user-images.githubusercontent.com/53733092/215771435-25408246-2309-4f8b-a781-1f3d93bdf0ec.png
 tags:
-  - book-summary
-  - personal-development
-  - communication
-  - leadership
   - relationships
 description: 21 timeless principles from Dale Carnegie's classic on relationships, influence, and communication, with practical takeaways to apply immediately.
 lang: en
