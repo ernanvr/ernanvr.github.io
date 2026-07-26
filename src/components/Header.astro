@@ -7,7 +7,7 @@ import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
 
 export interface Props {
-  activeNav?: "posts" | "archives" | "tags" | "about" | "search" | "now";
+  activeNav?: "posts" | "archives" | "tags" | "about" | "search";
 }
 
 const { activeNav } = Astro.props;
@@ -90,14 +90,6 @@ const t = useTranslations(locale);
               </li>
             )
           }
-          <li>
-            <a
-              href={getLocalizedPath(locale, "now")}
-              class={activeNav === "now" ? "active" : ""}
-            >
-              {t("nav.now")}
-            </a>
-          </li>
           {
             SITE.showArchives && (
               <li>

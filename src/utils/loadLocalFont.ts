@@ -48,7 +48,7 @@ export default function loadLocalFonts(): FontOptions[] {
 
   cache = [
     read("IBMPlexMono-Regular.ttf", 400, "normal"),
-    read("IBMPlexMono-Bold.ttf", 700, "bold"),
+    read("IBMPlexMono-Bold.ttf", 700, "normal"),
   ];
 
   return cache;

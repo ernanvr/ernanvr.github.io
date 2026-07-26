@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import PostDetails from "@layouts/PostDetails.astro";
-import { getSortedPostsByLocale } from "@utils/posts";
+import { getAllSortedPostsByLocale } from "@utils/posts";
 import { getPostDetailsStaticPaths } from "@utils/staticPaths";
 
 export interface Props {
@@ -12,7 +12,7 @@ export async function getStaticPaths() {
   return getPostDetailsStaticPaths("en");
 }
 
-const sortedPosts = await getSortedPostsByLocale("en");
+const sortedPosts = await getAllSortedPostsByLocale("en");
 ---
 
 <PostDetails post={Astro.props.post} posts={sortedPosts} locale="en" />
