@@ -44,6 +44,7 @@ const ui = {
     "footer.rights": "All rights reserved.",
     "breadcrumbs.home": "Home",
     "breadcrumbs.page": "page",
+    "og.by": "by",
   },
   es: {
     "nav.skipToContent": "Saltar al contenido",
@@ -88,6 +89,7 @@ const ui = {
     "footer.rights": "Todos los derechos reservados.",
     "breadcrumbs.home": "Inicio",
     "breadcrumbs.page": "pagina",
+    "og.by": "por",
   },
 } as const;
 

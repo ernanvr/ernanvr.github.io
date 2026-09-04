@@ -1,9 +1,12 @@
 import satori from "satori";
 import type { CollectionEntry } from "astro:content";
 import { SITE } from "@config";
+import { useTranslations } from "@i18n/ui";
 import loadLocalFonts, { type FontOptions } from "../loadLocalFont";
 
 export default async (post: CollectionEntry<"blog">) => {
+  const t = useTranslations(post.data.lang);
+
   return satori(
     <div
       style={{
@@ -74,7 +77,7 @@ export default async (post: CollectionEntry<"blog">) => {
             }}
           >
             <span>
-              by{" "}
+              {t("og.by")}{" "}
               <span
                 style={{
                   color: "transparent",

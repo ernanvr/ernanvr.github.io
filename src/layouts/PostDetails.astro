@@ -7,7 +7,7 @@ import Datetime from "@components/Datetime.astro";
 import { type CollectionEntry, render } from "astro:content";
 import { getPostSlug } from "@utils/slugify";
 import { useTranslations } from "@i18n/ui";
-import { getLocalizedPath, type Locale } from "@i18n/utils";
+import { getLocalizedPath, localizePath, type Locale } from "@i18n/utils";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import { SITE } from "@config";
@@ -30,15 +30,20 @@ const {
   pubDatetime,
   modDatetime,
   tags,
+  archived,
 } = post.data;
 
 const { Content } = await render(post);
 
 const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
-const ogUrl = new URL(
-  ogImageUrl ?? `/posts/${getPostSlug(post.id)}.png`,
-  Astro.url.origin
-).href;
+// Auto-generated OG images come from src/pages/[es/]posts/[slug]/index.png.ts,
+// so the fallback must keep the /index.png shape and the locale prefix.
+const generatedOgPath = localizePath(
+  `/posts/${getPostSlug(post.id)}/index.png`,
+  locale,
+  false
+);
+const ogUrl = new URL(ogImageUrl ?? generatedOgPath, Astro.url.origin).href;
 
 const layoutProps = {
   title: `${title} | ${SITE.title}`,
@@ -75,7 +80,7 @@ const postPath = getLocalizedPath(locale, "posts");
 
   <div class="mx-auto flex w-full max-w-3xl justify-start px-4">
     <button
-      class="focus-outline paper-surface mb-2 mt-8 flex items-center gap-1 px-3 py-1.5 font-mono text-sm hover:text-skin-accent"
+      class="focus-outline paper-surface mb-2 mt-8 flex items-center gap-1 px-3 py-1.5 font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 hover:text-skin-accent hover:shadow-card-hover active:translate-y-0 active:scale-[0.98]"
       onclick={`(() => (history.length === 1) ? window.location = '${homePath}' : history.back())()`}
     >
       <svg xmlns="http://www.w3.org/2000/svg"
@@ -103,16 +108,22 @@ const postPath = getLocalizedPath(locale, "posts");
       <Content />
     </article>
 
-    <ul class="my-8 flex flex-wrap gap-y-2">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} locale={locale} />)}
-    </ul>
+    {
+      !archived && (
+        <ul class="my-8 flex flex-wrap gap-y-2">
+          {tags.map(tag => (
+            <Tag tag={slugifyStr(tag)} locale={locale} />
+          ))}
+        </ul>
+      )
+    }
 
     <div
       class="flex flex-col-reverse items-center justify-between gap-6 sm:flex-row-reverse sm:items-end sm:gap-4"
     >
       <button
         id="back-to-top"
-        class="focus-outline paper-surface whitespace-nowrap px-3 py-1.5 font-mono text-sm hover:text-skin-accent"
+        class="focus-outline paper-surface whitespace-nowrap px-3 py-1.5 font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 hover:text-skin-accent hover:shadow-card-hover active:translate-y-0 active:scale-[0.98]"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="rotate-90">
           <path
@@ -211,7 +222,7 @@ const postPath = getLocalizedPath(locale, "posts");
     // Create the main container div
     const progressContainer = document.createElement("div");
     progressContainer.className =
-      "progress-container fixed top-0 z-10 h-1 w-full bg-skin-fill";
+      "progress-container fixed top-0 z-50 h-1 w-full bg-skin-fill/40";
 
     // Create the progress bar div
     const progressBar = document.createElement("div");
