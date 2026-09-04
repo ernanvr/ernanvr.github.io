@@ -8,17 +8,21 @@ export const LOCALE_INFO: Record<
   Locale,
   {
     code: string;
+    /** Native language name, e.g. "English" / "Español" */
+    name: string;
     langTag: string;
     hreflang: string;
   }
 > = {
   en: {
     code: "EN",
+    name: "English",
     langTag: "en-US",
     hreflang: "en-US",
   },
   es: {
     code: "ES",
+    name: "Español",
     langTag: "es-419",
     hreflang: "es-419",
   },

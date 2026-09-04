@@ -12,7 +12,10 @@ export async function getStaticPaths() {
   return getPostDetailsStaticPaths("en");
 }
 
-const sortedPosts = await getSortedPostsByLocale("en");
+// Full list (incl. archived) so prev/next navigation works on archived posts too
+const sortedPosts = await getSortedPostsByLocale("en", {
+  includeArchived: true,
+});
 ---
 
 <PostDetails post={Astro.props.post} posts={sortedPosts} locale="en" />

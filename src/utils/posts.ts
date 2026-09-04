@@ -5,8 +5,13 @@ import getSortedPosts from "./getSortedPosts";
 import getUniqueTags from "./getUniqueTags";
 import type { Locale } from "@i18n/utils";
 
+export interface GetPostsOptions {
+  /** Include posts marked as `archived: true`. Defaults to false. */
+  includeArchived?: boolean;
+}
+
 const cache = new Map<Locale, Promise<CollectionEntry<"blog">[]>>();
-const sortedCache = new Map<Locale, CollectionEntry<"blog">[]>();
+const sortedCache = new Map<string, CollectionEntry<"blog">[]>();
 const tagsCache = new Map<Locale, { tag: string; tagName: string }[]>();
 
 const fetchPosts = (locale: Locale): Promise<CollectionEntry<"blog">[]> =>
@@ -25,19 +30,27 @@ export const getAllPosts = (
 };
 
 export const getSortedPostsByLocale = async (
-  locale: Locale
+  locale: Locale,
+  { includeArchived = false }: GetPostsOptions = {}
 ): Promise<CollectionEntry<"blog">[]> => {
-  if (!sortedCache.has(locale)) {
-    sortedCache.set(locale, getSortedPosts(await getAllPosts(locale)));
+  const cacheKey = `${locale}:${includeArchived ? "all" : "live"}`;
+  if (!sortedCache.has(cacheKey)) {
+    const posts = await getAllPosts(locale);
+    const visiblePosts = includeArchived
+      ? posts
+      : posts.filter(post => !post.data.archived);
+    sortedCache.set(cacheKey, getSortedPosts(visiblePosts));
   }
-  return sortedCache.get(locale)!;
+  return sortedCache.get(cacheKey)!;
 };
 
 export const getUniqueTagsByLocale = async (
   locale: Locale
 ): Promise<{ tag: string; tagName: string }[]> => {
   if (!tagsCache.has(locale)) {
-    tagsCache.set(locale, getUniqueTags(await getAllPosts(locale)));
+    // Only tags from non-archived posts, so the tag cloud matches tag pages
+    const livePosts = await getSortedPostsByLocale(locale);
+    tagsCache.set(locale, getUniqueTags(livePosts));
   }
   return tagsCache.get(locale)!;
 };

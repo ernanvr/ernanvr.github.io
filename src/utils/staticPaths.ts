@@ -14,7 +14,10 @@ export async function getPostsStaticPaths(
 }
 
 export async function getPostDetailsStaticPaths(locale: Locale) {
-  const posts = await getSortedPostsByLocale(locale);
+  // Include archived posts so their URLs keep resolving to their pages
+  const posts = await getSortedPostsByLocale(locale, {
+    includeArchived: true,
+  });
 
   return posts.map(post => ({
     params: { slug: getPostSlug(post.id) },
