@@ -49,6 +49,22 @@ function reflectPreference() {
 // set early so no page flashes / CSS is made aware
 reflectPreference();
 
+let themeTransitionTimer;
+
+function applyThemeWithTransition() {
+  // Cross-fade the palette instead of an abrupt brightness jump.
+  // The class only lives for the duration of the change, so initial
+  // page load never animates (no FOUC).
+  const root = document.documentElement;
+  root.classList.add("enable-theme-transition");
+  setPreference();
+  clearTimeout(themeTransitionTimer);
+  themeTransitionTimer = setTimeout(
+    () => root.classList.remove("enable-theme-transition"),
+    250
+  );
+}
+
 window.onload = () => {
   function setThemeFeature() {
     // set on load so screen readers can get the latest value on the button
@@ -57,7 +73,7 @@ window.onload = () => {
     // now this script can find and listen for clicks on the control
     document.querySelector("#theme-btn")?.addEventListener("click", () => {
       themeValue = themeValue === "light" ? "dark" : "light";
-      setPreference();
+      applyThemeWithTransition();
     });
   }
 
@@ -72,5 +88,5 @@ window
   .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener("change", ({ matches: isDark }) => {
     themeValue = isDark ? "dark" : "light";
-    setPreference();
+    applyThemeWithTransition();
   });

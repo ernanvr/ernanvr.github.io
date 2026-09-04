@@ -36,7 +36,7 @@ const pageDescriptions = {
     pageDesc={pageDescriptions[locale]}
   >
     <h1 slot="title" transition:name={tag}>{`${t("nav.tags")}:${tag}`}</h1>
-    <ul class="space-y-1">
+    <ul class="space-y-5">
       {
         page.data.map(({ data, id }) => (
           <Card

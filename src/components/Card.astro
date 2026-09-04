@@ -24,7 +24,7 @@ const headingStyle = `view-transition-name: ${slugifyStr(title)}`;
 const Heading = secHeading ? "h2" : "h3";
 ---
 
-<li class="paper-surface paper-surface-hover my-6 p-5 sm:p-6">
+<li class="paper-surface paper-surface-hover p-5 sm:p-6">
   <a
     href={href}
     class="text-skin-accent inline-block decoration-dashed focus-visible:no-underline focus-visible:underline-offset-0"
@@ -37,5 +37,7 @@ const Heading = secHeading ? "h2" : "h3";
     className="mt-2"
     locale={locale}
   />
-  <p class="text-skin-base/90 mt-3 text-[0.98rem] leading-7">{description}</p>
+  <p class="text-skin-base/90 mt-3 text-pretty text-[0.98rem] leading-7">
+    {description}
+  </p>
 </li>

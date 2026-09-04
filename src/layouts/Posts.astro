@@ -33,7 +33,7 @@ const pageTitles = {
 <Layout title={`${pageTitles[locale]} | ${SITE.title}`}>
   <Header activeNav="posts" />
   <Main pageTitle={t("nav.posts")} pageDesc={pageDescriptions[locale]}>
-    <ul class="space-y-1">
+    <ul class="space-y-5">
       {
         page.data.map(({ data, id }) => (
           <Card

@@ -65,7 +65,7 @@
 }
 
 @utility paper-surface-hover {
-  @apply hover:border-skin-line hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5;
+  @apply hover:border-skin-line hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98];
 }
 
 @layer base {
@@ -119,10 +119,14 @@
   h5,
   h6 {
     @apply text-skin-base font-mono tracking-tight;
+    text-wrap: balance;
   }
   p,
   li {
     @apply font-serif;
+  }
+  p {
+    text-wrap: pretty;
   }
   nav,
   button,
@@ -138,6 +142,15 @@
   }
   a {
     @apply focus-visible:outline-skin-accent transition-colors duration-200 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed;
+  }
+  /* Kill the ~300ms double-tap-zoom delay on interactive elements.
+     Feedback must live on the press, not after it. */
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
   }
   svg {
     @apply fill-skin-base group-hover:fill-skin-accent inline-block h-6 w-6;
@@ -221,5 +234,65 @@
     font-style: var(--shiki-dark-font-style) !important;
     font-weight: var(--shiki-dark-font-weight) !important;
     text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+
+  /* ===== Craft details ===== */
+  html {
+    font-optical-sizing: auto;
+  }
+
+  /* Anchor targets clear the sticky header instead of hiding under it */
+  .prose :where(h2, h3, h4, h5, h6) {
+    scroll-margin-top: 5.5rem;
+  }
+  #main-content {
+    scroll-margin-top: 4.5rem;
+  }
+
+  /* Cross-fade theme changes instead of an abrupt brightness jump.
+     The class is added only for the duration of a toggle (toggle-theme.js),
+     so initial page load never animates. */
+  html.enable-theme-transition,
+  html.enable-theme-transition body,
+  html.enable-theme-transition
+    :where(
+      header,
+      footer,
+      section,
+      article,
+      .paper-surface,
+      nav ul,
+      .prose pre,
+      .prose blockquote
+    ) {
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  /* ===== Accessibility: gentler, non-vestibular equivalents ===== */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .site-header {
+      background: rgb(var(--color-fill)) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    #menu-items,
+    .locale-menu {
+      background: rgb(var(--color-card)) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
   }
 }
