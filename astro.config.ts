@@ -13,10 +13,13 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "hover",
   },
-  image: {
-    remotePatterns: [
-      { protocol: "https", hostname: "user-images.githubusercontent.com" },
-    ],
+  redirects: {
+    // Both language versions were rewritten from a 21-principle summary into a
+    // personal essay and re-slugged. Keep the published URLs resolving.
+    "/es/posts/how-to-win-friends-and-influence-people-key-insights-es":
+      "/es/posts/tres-lecciones-que-me-cambiaron-la-vida",
+    "/posts/how-to-win-friends-and-influence-people-key-insights":
+      "/posts/three-lessons-that-changed-my-life",
   },
   integrations: [
     sitemap({

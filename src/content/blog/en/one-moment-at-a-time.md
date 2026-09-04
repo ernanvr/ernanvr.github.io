@@ -4,7 +4,7 @@ pubDatetime: 2026-04-05T03:57:52.737Z
 modDatetime: 2026-04-05T03:57:52.737Z
 title: One moment at a time
 slug: one-moment-at-a-time
-featured: true
+archived: true
 ogImage: /assets/one-moment-at-a-time-en.png
 tags:
   - philosophy

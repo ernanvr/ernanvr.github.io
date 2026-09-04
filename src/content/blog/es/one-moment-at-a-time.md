@@ -4,7 +4,7 @@ pubDatetime: 2026-04-05T03:57:52.737Z
 modDatetime: 2026-04-05T03:57:52.737Z
 title: Un momento a la vez
 slug: un-momento-a-la-vez
-featured: true
+archived: true
 ogImage: /assets/one-moment-at-a-time-es.png
 tags:
   - filosofía
