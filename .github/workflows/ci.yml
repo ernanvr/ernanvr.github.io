@@ -32,7 +32,12 @@ jobs:
       - name: "📦 Install dependencies"
         run: npm ci
 
+      # Temporarily non-blocking: the registry's bulk advisory endpoint returns a
+      # gzip body without a content-encoding header, so npm falls back to the
+      # retired quick-audit endpoint and always exits 1. See issue #61 and make
+      # this step blocking again once the registry is fixed.
       - name: "🔒 Security audit"
+        continue-on-error: true
         run: npm audit --audit-level=high
 
       - name: "🔎 Lint code"
