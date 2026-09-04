@@ -45,5 +45,7 @@ node_modules
 .vscode/
 sdd/
 docs/engram
-docs/.obsidian
 openspec/
+
+# Obsidian vault config (editor state, not project source)
+.obsidian/
