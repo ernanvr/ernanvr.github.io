@@ -25,27 +25,23 @@ const shareLinks = [
     via: false,
   },
   {
-    name: "Telegram",
-    href: "https://t.me/share/url?url=",
-    via: true,
-  },
-  {
-    name: "Pinterest",
-    href: "https://pinterest.com/pin/create/button/?url=",
-    via: false,
-  },
-  {
     name: "Mail",
     href: "mailto:?subject=See%20this%20post&body=",
     via: true,
+    wordKey: "post.shareMail",
   },
 ] as const;
 
 // The label used to be a hardcoded English string, so on /es/ pages the
 // `title` and the sr-only text announced "Share this post via WhatsApp" to
 // screen readers regardless of locale.
-const shareLabel = (via: boolean, name: string) =>
-  `${t(via ? "post.shareVia" : "post.shareOn")} ${name}`;
+// `wordKey` covers the one network whose spoken name is a common noun rather
+// than a brand: "Compartir por Mail" reads wrong, "Compartir por correo" is
+// right. The icon is still looked up by `name`.
+const shareLabel = (social: (typeof shareLinks)[number]) =>
+  `${t(social.via ? "post.shareVia" : "post.shareOn")} ${
+    "wordKey" in social ? t(social.wordKey) : social.name
+  }`;
 ---
 
 <div class="share-links">
@@ -53,7 +49,7 @@ const shareLabel = (via: boolean, name: string) =>
   <div class="share-row">
     {
       shareLinks.map(social => {
-        const label = shareLabel(social.via, social.name);
+        const label = shareLabel(social);
         return (
           <LinkButton
             href={`${social.href + URL}`}
