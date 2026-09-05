@@ -58,14 +58,15 @@ const updatePreferenceFromLanguageSwitcher = (event: MouseEvent) => {
     return;
   }
 
-  const localeLink = target.closest(".locale-link");
+  // Match on the switcher wrapper, not the link's own class: the inner markup
+  // has already been redesigned once (.locale-link -> .locale-item) and this
+  // handler silently stopped firing. .locale-switcher survived that redesign.
+  const localeLink = target.closest(".locale-switcher a");
   if (!(localeLink instanceof HTMLAnchorElement)) {
     return;
   }
 
-  const href = localeLink.getAttribute("href") || "";
-  const targetLocale: Locale =
-    href === "/es" || href.startsWith("/es/") ? "es" : "en";
+  const targetLocale = getLocaleFromPath(localeLink.getAttribute("href") || "");
 
   setStoredLocale(targetLocale);
   debugLog("Stored locale from language switcher:", targetLocale);
