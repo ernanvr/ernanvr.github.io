@@ -52,10 +52,6 @@
   );
 }
 
-@utility display-none {
-  @apply hidden;
-}
-
 @utility focus-outline {
   @apply focus-visible:outline-skin-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed;
 }
