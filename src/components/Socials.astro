@@ -10,12 +10,12 @@ export interface Props {
 const { centered = false } = Astro.props;
 ---
 
-<div class={`social-icons ${centered ? "flex" : ""}`}>
+<div class:list={["social-icons", centered && "centered"]}>
   {
     SOCIALS.filter(social => social.active).map(social => (
       <LinkButton
         href={social.href}
-        className="link-button"
+        className="icon-control"
         title={social.linkTitle}
         openInNewTab={social.openInNewTab}
       >
@@ -28,10 +28,14 @@ const { centered = false } = Astro.props;
 
 <style>
   @reference "#base.css";
+  /* Always flex: it used to gain `flex` only via the `centered` prop, so on the
+     home page (no prop) this was a block and flex-wrap/gap/justify-center
+     silently did nothing — the icons were spaced by raw inline-block
+     whitespace. `centered` now only picks the alignment. */
   .social-icons {
-    @apply flex-wrap justify-center gap-2.5 sm:gap-2;
+    @apply flex flex-wrap items-center gap-1;
   }
-  .link-button {
-    @apply rounded-md border border-transparent p-2 hover:border-skin-line/80 hover:bg-skin-fill/70 sm:p-1.5;
+  .social-icons.centered {
+    @apply justify-center;
   }
 </style>

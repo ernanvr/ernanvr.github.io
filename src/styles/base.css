@@ -60,6 +60,20 @@
   @apply focus-visible:outline-skin-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed;
 }
 
+/* Icon-only link (share row, footer socials).
+   Has to be a GLOBAL utility, not a class inside a component <style>: Astro
+   rewrites `.link-button` into `.link-button:where(.astro-<id>)`, and the <a>
+   is rendered by the LinkButton child component, so it never carries the
+   parent's scope id — the scoped rule silently never applied and the icons
+   rendered as raw 24x26px svgs with no padding, border or hover box.
+   Sized with padding on purpose: setting `display` here would fight
+   LinkButton's own `inline-block` (same layer, emitted order decides), so the
+   24px svg grows to a 44x44 touch target via 10px padding instead.
+   `leading-none` drops the ~2px line-box that would make it 44x46. */
+@utility icon-control {
+  @apply inline-block rounded-md border border-transparent p-2.5 leading-none text-skin-base/85 transition-colors duration-150 hover:border-skin-line/80 hover:bg-skin-fill/70 hover:text-skin-accent sm:p-2;
+}
+
 @utility paper-surface {
   @apply border-skin-line/70 bg-paper shadow-card rounded-lg border;
 }

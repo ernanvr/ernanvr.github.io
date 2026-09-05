@@ -67,9 +67,18 @@ const currentPostIndex = allPosts.findIndex(
   a => a.slug === getPostSlug(post.id)
 );
 
-const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
+// The old guards were wrong-but-harmless: `currentPostIndex !== allPosts.length`
+// can never be true (max index is length-1), so the last post relied on
+// `allPosts[length]` being undefined. If a post ever fails to match, index is
+// -1 and those guards handed out `allPosts[-2]` / the newest post instead of
+// rendering nothing.
+const hasNeighbours = currentPostIndex > -1;
+const prevPost =
+  hasNeighbours && currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =
-  currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
+  hasNeighbours && currentPostIndex < allPosts.length - 1
+    ? allPosts[currentPostIndex + 1]
+    : null;
 
 const homePath = getLocalizedPath(locale, "home");
 const postPath = getLocalizedPath(locale, "posts");
@@ -80,7 +89,7 @@ const postPath = getLocalizedPath(locale, "posts");
 
   <div class="mx-auto flex w-full max-w-3xl justify-start px-4">
     <button
-      class="focus-outline paper-surface mb-2 mt-8 flex items-center gap-1 px-3 py-1.5 font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 hover:text-skin-accent hover:shadow-card-hover active:translate-y-0 active:scale-[0.98]"
+      class="focus-outline paper-surface mb-2 mt-8 flex min-h-11 items-center gap-1 px-3 py-1.5 font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 hover:text-skin-accent hover:shadow-card-hover active:translate-y-0 active:scale-[0.98] sm:min-h-0"
       onclick={`(() => (history.length === 1) ? window.location = '${homePath}' : history.back())()`}
     >
       <svg xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +132,7 @@ const postPath = getLocalizedPath(locale, "posts");
     >
       <button
         id="back-to-top"
-        class="focus-outline paper-surface whitespace-nowrap px-3 py-1.5 font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 hover:text-skin-accent hover:shadow-card-hover active:translate-y-0 active:scale-[0.98]"
+        class="focus-outline paper-surface flex min-h-11 items-center gap-1 whitespace-nowrap px-3 py-1.5 font-mono text-sm transition-all duration-200 hover:-translate-y-0.5 hover:text-skin-accent hover:shadow-card-hover active:translate-y-0 active:scale-[0.98] sm:min-h-0"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="rotate-90">
           <path
@@ -144,7 +153,7 @@ const postPath = getLocalizedPath(locale, "posts");
         prevPost && (
           <a
             href={`${postPath}${prevPost.slug}`}
-            class="paper-surface paper-surface-hover flex w-full gap-2 px-3 py-3"
+            class="paper-surface paper-surface-hover flex w-fit max-w-full items-center justify-self-start gap-2 px-3 py-3 sm:w-full sm:max-w-none"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -174,7 +183,7 @@ const postPath = getLocalizedPath(locale, "posts");
         nextPost && (
           <a
             href={`${postPath}${nextPost.slug}`}
-            class="paper-surface paper-surface-hover flex w-full justify-end gap-2 px-3 py-3 text-right sm:col-start-2"
+            class="paper-surface paper-surface-hover flex w-fit max-w-full items-center justify-self-end gap-2 px-3 py-3 text-left sm:col-start-2 sm:w-full sm:max-w-none sm:justify-end sm:text-right"
           >
             <div>
               <span>{t("post.nextPost")}</span>
