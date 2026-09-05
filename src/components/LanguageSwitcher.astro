@@ -2,9 +2,11 @@
 import {
   SUPPORTED_LOCALES,
   getLocaleFromPath,
-  localizePath,
+  getLocalizedPath,
   LOCALE_INFO,
+  type Locale,
 } from "@i18n/utils";
+import { resolveLocalizedPath } from "@utils/localizedRoutes";
 
 export interface Props {
   ariaLabel?: string;
@@ -12,6 +14,29 @@ export interface Props {
 
 const { ariaLabel = "Language" } = Astro.props;
 const currentLocale = getLocaleFromPath(Astro.url.pathname);
+
+/*
+ * Used to build every entry with localizePath(Astro.url.pathname, locale),
+ * which cannot know per-post slugs: on
+ * /posts/three-lessons-that-changed-my-life/ it offered "Español" at
+ * /es/posts/three-lessons-that-changed-my-life/, a URL that was never
+ * generated. This is the site's main language control, so every post served a
+ * 404 through it.
+ *
+ * The counterpart now comes from each post's `translation` frontmatter. When a
+ * page really has no version in a language, fall back to that language's home:
+ * switching languages must never dead-end, it just cannot always land on the
+ * same article.
+ */
+const localeHrefs = Object.fromEntries(
+  await Promise.all(
+    SUPPORTED_LOCALES.map(async locale => [
+      locale,
+      (await resolveLocalizedPath(Astro.url.pathname, locale)) ??
+        getLocalizedPath(locale, "home"),
+    ])
+  )
+) as Record<Locale, string>;
 ---
 
 <!-- iOS-style menu: one compact trigger, popover anchored to it -->
@@ -48,7 +73,7 @@ const currentLocale = getLocaleFromPath(Astro.url.pathname);
         const isActive = currentLocale === locale;
         return (
           <a
-            href={localizePath(Astro.url.pathname, locale)}
+            href={localeHrefs[locale]}
             role="menuitem"
             aria-checked={isActive ? "true" : "false"}
             lang={LOCALE_INFO[locale].langTag}

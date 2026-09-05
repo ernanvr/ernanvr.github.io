@@ -23,6 +23,15 @@ const blog = defineCollection({
         .optional(),
       description: z.string(),
       lang: z.enum(["en", "es"]).default("en"),
+      /**
+       * Slug of this same article in the other language. Declared rather than
+       * guessed: the two locales use different slugs
+       * (`three-lessons-that-changed-my-life` vs
+       * `tres-lecciones-que-me-cambiaron-la-vida`), so no amount of path
+       * manipulation can derive one from the other. One direction is enough —
+       * the resolver mirrors it — but both are usually written for clarity.
+       */
+      translation: z.string().optional(),
       canonicalURL: z.string().optional(),
       editPost: z
         .object({
