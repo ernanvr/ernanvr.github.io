@@ -84,14 +84,27 @@ const structuredData = {
     <meta name="viewport" content="width=device-width" />
     <script is:inline>
       (() => {
-        const storedTheme = localStorage.getItem("theme");
-        const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
-          .matches
-          ? "dark"
-          : "light";
+        // Resolution lives here AND in /toggle-theme.js, and both must agree:
+        // this one runs before first paint, that one after. Effective theme is
+        // an explicit override from THIS tab only, else the browser's setting.
+        const KEY = "theme";
+        let override = null;
+        try {
+          // Migration: visitors from before this change have `theme` pinned in
+          // localStorage, which would outrank the browser forever. Drop it.
+          localStorage.removeItem(KEY);
+          const v = sessionStorage.getItem(KEY);
+          override = v === "light" || v === "dark" ? v : null;
+        } catch {
+          // Private mode / storage disabled: fall back to the browser.
+          override = null;
+        }
         document.documentElement.setAttribute(
           "data-theme",
-          storedTheme ?? preferredTheme
+          override ??
+            (window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light")
         );
       })();
     </script>
