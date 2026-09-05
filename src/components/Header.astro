@@ -303,13 +303,15 @@ const t = useTranslations(locale);
 <script>
   function toggleNav() {
     // Toggle menu
-    const menuBtn = document.querySelector(".hamburger-menu");
+    const menuBtn = document.querySelector<HTMLElement>(".hamburger-menu");
     const menuIcon = document.querySelector(".menu-icon");
     const menuItems = document.querySelector("#menu-items");
+    const nav = document.querySelector("#nav-menu");
 
     if (
       !menuBtn ||
       !menuItems ||
+      !nav ||
       menuBtn.getAttribute("data-nav-listener-bound") === "true"
     ) {
       return;
@@ -317,28 +319,68 @@ const t = useTranslations(locale);
 
     menuBtn.setAttribute("data-nav-listener-bound", "true");
 
+    const isExpanded = () => menuBtn.getAttribute("aria-expanded") === "true";
+
+    const closeMenu = () => {
+      menuIcon?.classList.remove("is-active");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute(
+        "aria-label",
+        menuBtn.getAttribute("data-open-label") || "Open Menu"
+      );
+      menuItems?.classList.remove("is-open");
+      menuItems?.classList.add("display-none");
+    };
+
+    const openMenu = () => {
+      menuItems?.classList.remove("display-none");
+      menuItems?.classList.remove("is-open");
+      requestAnimationFrame(() => {
+        menuItems?.classList.add("is-open");
+      });
+      menuIcon?.classList.add("is-active");
+      menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.setAttribute(
+        "aria-label",
+        menuBtn.getAttribute("data-close-label") || "Close Menu"
+      );
+    };
+
     menuBtn.addEventListener("click", () => {
-      const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
-      const openLabel = menuBtn.getAttribute("data-open-label") || "Open Menu";
-      const closeLabel =
-        menuBtn.getAttribute("data-close-label") || "Close Menu";
-      if (menuExpanded) {
-        menuIcon?.classList.remove("is-active");
-        menuBtn.setAttribute("aria-expanded", "false");
-        menuBtn.setAttribute("aria-label", openLabel);
-        menuItems?.classList.remove("is-open");
-        menuItems?.classList.add("display-none");
+      if (isExpanded()) {
+        closeMenu();
       } else {
-        menuItems?.classList.remove("display-none");
-        menuItems?.classList.remove("is-open");
-        requestAnimationFrame(() => {
-          menuItems?.classList.add("is-open");
-        });
-        menuIcon?.classList.add("is-active");
-        menuBtn.setAttribute("aria-expanded", "true");
-        menuBtn.setAttribute("aria-label", closeLabel);
+        openMenu();
       }
     });
+
+    // Close when tapping/clicking anywhere outside the nav
+    document.addEventListener("pointerdown", event => {
+      if (isExpanded() && !nav.contains(event.target as Node)) {
+        closeMenu();
+      }
+    });
+
+    // Close with the Escape key
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && isExpanded()) {
+        closeMenu();
+        menuBtn.focus();
+      }
+    });
+
+    // Dismiss the menu as soon as one of its links is used
+    menuItems.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Re-hide the dropdown whenever the viewport crosses the sm
+    // breakpoint. Without this, opening the menu and then resizing
+    // (e.g. rotating the device) leaves it visible on mobile, since
+    // "display-none" was removed and nothing puts it back.
+    window
+      .matchMedia("(min-width: 640px)")
+      .addEventListener("change", closeMenu);
   }
 
   toggleNav();
