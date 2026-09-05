@@ -4,6 +4,7 @@ pubDatetime: 2025-05-22T03:57:52.737Z
 modDatetime: 2026-09-04T08:15:00.000Z
 title: Three lessons from "How to Win Friends" that changed my life
 slug: three-lessons-that-changed-my-life
+translation: tres-lecciones-que-me-cambiaron-la-vida
 archived: true
 tags:
   - book-lessons

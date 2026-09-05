@@ -4,6 +4,7 @@ pubDatetime: 2025-05-22T03:57:52.737Z
 modDatetime: 2026-09-04T08:15:00.000Z
 title: Tres lecciones de «Cómo ganar amigos» que me cambiaron la vida
 slug: tres-lecciones-que-me-cambiaron-la-vida
+translation: three-lessons-that-changed-my-life
 archived: true
 tags:
   - lecciones-de-libros
